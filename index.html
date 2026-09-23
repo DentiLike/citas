@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Agenda tu cita · Dentilike</title>
+<meta name="description" content="Agenda tu primera cita en Dentilike. Valoración con especialista en San Luis Potosí.">
+<meta name="theme-color" content="#124578">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#124578; --azul-osc:#0d3560; --teal:#46c3b6; --teal-osc:#2e959d;
+    --tinta:#1e293b; --gris:#64748b; --gris-cl:#94a3b8; --borde:#e2e8f0;
+    --ok:#059669; --fondo:#eef2f7; --sombra:0 10px 30px rgba(18,69,120,.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif;}
+  body{background:var(--fondo); color:var(--tinta); min-height:100vh; padding:0 0 40px;}
+  .topbar{background:var(--azul); color:#fff; padding:16px 20px calc(16px + env(safe-area-inset-top,0px)); display:flex; align-items:center; gap:12px; box-shadow:0 3px 14px rgba(18,69,120,.25);}
+  .topbar .logo-ico{width:40px; height:40px; border-radius:11px; background:rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; font-size:1.4rem;}
+  .topbar .marca{font-weight:700; font-size:1.2rem; font-family:'Fredoka',sans-serif;}
+  .topbar .sub{font-size:.72rem; opacity:.85;}
+  .wrap{max-width:480px; margin:0 auto; padding:0 18px;}
+
+  .hero{text-align:center; padding:26px 10px 10px;}
+  .hero h1{font-size:1.5rem; color:var(--azul-osc); font-family:'Fredoka',sans-serif; margin-bottom:8px;}
+  .hero p{font-size:.9rem; color:var(--gris); line-height:1.5;}
+
+  .card{background:#fff; border:1.5px solid var(--borde); border-radius:20px; padding:22px 18px; box-shadow:var(--sombra); margin-top:18px;}
+  label{display:block; font-size:.82rem; font-weight:700; color:var(--azul); margin:14px 0 6px;}
+  label:first-child{margin-top:0;}
+  input, select{width:100%; border:1.5px solid var(--borde); border-radius:12px; padding:13px 12px; font-size:.92rem; font-family:inherit; color:var(--tinta); background:#fff; -webkit-appearance:none; appearance:none;}
+  input:focus, select:focus{outline:none; border-color:var(--teal);}
+  input::placeholder{color:var(--gris-cl);}
+  .fila{display:flex; gap:10px;}
+  .fila > div{flex:1;}
+  .tel-group{display:flex; align-items:stretch; gap:8px;}
+  .tel-prefix{display:flex; align-items:center; padding:0 12px; background:var(--fondo); border:1.5px solid var(--borde); border-radius:12px; font-weight:700; color:var(--gris); font-size:.85rem; white-space:nowrap;}
+  .btn{width:100%; background:var(--azul); color:#fff; border:none; border-radius:14px; padding:15px; font-weight:700; font-size:1rem; margin-top:22px; cursor:pointer; transition:transform .15s, opacity .2s; font-family:'Fredoka',sans-serif;}
+  .btn:active{transform:scale(.98);}
+  .btn:disabled{opacity:.6;}
+  .nota{font-size:.76rem; color:var(--gris); text-align:center; margin-top:14px; line-height:1.5;}
+
+  .exito{text-align:center; padding:20px 6px;}
+  .exito .ico{font-size:3.4rem; margin-bottom:10px;}
+  .exito h2{color:var(--azul-osc); font-family:'Fredoka',sans-serif; margin-bottom:12px;}
+  .exito p{color:var(--gris); font-size:.92rem; line-height:1.6; margin-bottom:20px;}
+  .exito .btn-wa{display:inline-flex; align-items:center; gap:8px; background:#25D366; color:#fff; text-decoration:none; padding:13px 22px; border-radius:12px; font-weight:700;}
+
+  .contacto{text-align:center; margin-top:22px; font-size:.82rem; color:var(--gris); line-height:1.7;}
+  .contacto a{color:var(--teal-osc); text-decoration:none; font-weight:600;}
+  .sync{position:fixed; bottom:12px; left:12px; font-size:.7rem; color:var(--gris-cl); display:flex; align-items:center; gap:6px;}
+  .sync .dot{width:9px; height:9px; border-radius:50%; background:var(--gris-cl);}
+  .sync .dot.ok{background:#22c55e;} .sync .dot.err{background:#ef4444;}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo-ico">🦷</div>
+    <div>
+      <div class="marca">Dentilike</div>
+      <div class="sub">Ortodoncia y Odontología · San Luis Potosí</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <h1>Agenda tu primera cita</h1>
+      <p>¿Aún no eres paciente? Déjanos tus datos y nos pondremos en contacto para confirmar tu valoración con el especialista.</p>
+    </div>
+
+    <div class="card" id="formCard">
+      <label>Tu nombre completo</label>
+      <input type="text" id="fNombre" placeholder="Ej. María López García">
+
+      <label>Tu teléfono (WhatsApp)</label>
+      <div class="tel-group">
+        <span class="tel-prefix">🇲🇽 +52</span>
+        <input type="tel" id="fTel" placeholder="444 123 4567" inputmode="numeric">
+      </div>
+
+      <label>¿Qué te interesa?</label>
+      <select id="fMotivo">
+        <option value="Valoración/consulta inicial">Valoración / consulta inicial</option>
+        <option value="Ortodoncia">Ortodoncia (brackets)</option>
+        <option value="Urgencia">Urgencia dental</option>
+        <option value="Otro">Otro</option>
+      </select>
+
+      <div class="fila">
+        <div>
+          <label>Día</label>
+          <select id="fFecha"><option value="">Elige…</option></select>
+        </div>
+        <div>
+          <label>Hora</label>
+          <select id="fHora"><option value="">Elige día primero</option></select>
+        </div>
+      </div>
+
+      <button class="btn" id="btnEnviar" onclick="enviarSolicitud()">Enviar solicitud</button>
+      <div class="nota">Tu cita no queda agendada hasta que confirmemos contigo. Solo es una solicitud — nosotros te contactamos.</div>
+    </div>
+
+    <div class="contacto">
+      ¿Prefieres escribirnos directo?<br>
+      <a href="#" onclick="waDirecto(); return false;">💬 Contáctanos por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="sync"><span class="dot" id="syncDot"></span><span id="syncTxt">Conectando…</span></div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4Kws78y5K3-1IuBibxCOo-a11ccuNYUE",
+      authDomain: "misonrisa-citas.firebaseapp.com",
+      projectId: "misonrisa-citas",
+      storageBucket: "misonrisa-citas.firebasestorage.app",
+      messagingSenderId: "601464011103",
+      appId: "1:601464011103:web:e03150d9b86eb40a451eea"
+    };
+    const TEL_CLINICA = "524446036659";
+    let db=null, auth=null, fbOK=false, authListo=false, horarios=null, disponibilidad=null, enviando=false;
+
+    try {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+      auth = firebase.auth();
+      fbOK = true;
+    } catch(e){ console.error('firebase init', e); }
+
+    function setSync(ok){
+      const d=document.getElementById('syncDot'), t=document.getElementById('syncTxt');
+      d.className = 'dot ' + (ok?'ok':'err');
+      t.textContent = ok ? 'Conectado' : 'Sin conexión';
+    }
+
+    async function iniciar(){
+      if(!fbOK){ setSync(false); return; }
+      try{
+        await auth.signInAnonymously();
+        authListo = true;
+        setSync(true);
+        await cargarHorarios();
+        await cargarDisponibilidad();
+        poblarFechas();
+      }catch(e){ console.error('auth', e); setSync(false); }
+    }
+
+    async function cargarHorarios(){
+      try{
+        const doc = await db.collection('config_publica').doc('horarios').get();
+        horarios = doc.exists ? doc.data() : null;
+      }catch(e){ horarios = null; }
+      if(!horarios) horarios = { mInicio:'09:00', mFin:'14:00', vInicio:'16:00', vFin:'20:00' };
+    }
+    async function cargarDisponibilidad(){
+      try{
+        const doc = await db.collection('config_publica').doc('disponibilidad').get();
+        disponibilidad = (doc.exists && doc.data().dias) ? doc.data().dias : null;
+      }catch(e){ disponibilidad = null; }
+    }
+
+    const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+
+    function poblarFechas(){
+      const sel = document.getElementById('fFecha');
+      const hoy = new Date();
+      let html = '<option value="">Elige…</option>';
+      let hayDias = false;
+      for(let i=1; i<=45; i++){
+        const d = new Date(hoy); d.setDate(hoy.getDate()+i);
+        if(d.getDay()===0) continue; // sin domingos
+        const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        // si hay disponibilidad publicada, solo mostrar días con huecos libres
+        if(disponibilidad){
+          if(!disponibilidad[iso] || !disponibilidad[iso].length) continue;
+        }
+        const label = `${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}`;
+        html += `<option value="${iso}">${label}</option>`;
+        hayDias = true;
+      }
+      if(!hayDias) html = '<option value="">No hay fechas disponibles ahora</option>';
+      sel.innerHTML = html;
+      sel.onchange = poblarHoras;
+    }
+
+    function horaAmPm(hhmm){
+      let [h,m]=hhmm.split(':').map(Number);
+      const ap = h>=12?'PM':'AM'; h=h%12; if(h===0)h=12;
+      return `${h}:${String(m).padStart(2,'0')} ${ap}`;
+    }
+    function horasEntre(ini,fin){
+      const out=[]; if(!ini||!fin) return out;
+      let [h,m]=ini.split(':').map(Number); const [hf,mf]=fin.split(':').map(Number);
+      while(h<hf || (h===hf && m<mf)){ out.push(`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`); m+=30; if(m>=60){m-=60;h++;} }
+      return out;
+    }
+    function poblarHoras(){
+      const sel = document.getElementById('fHora');
+      const fecha = document.getElementById('fFecha').value;
+      let horasLibres;
+      if(disponibilidad && fecha && disponibilidad[fecha]){
+        // usar solo las horas libres reales de ese día
+        horasLibres = disponibilidad[fecha];
+      } else {
+        // respaldo: todas las horas de la clínica
+        const h = horarios || {};
+        horasLibres = [...horasEntre(h.mInicio,h.mFin), ...horasEntre(h.vInicio,h.vFin)];
+      }
+      // separar mañana/tarde por si acaso (antes de las 14:00 = mañana)
+      const man = horasLibres.filter(x=>x < '14:00');
+      const tar = horasLibres.filter(x=>x >= '14:00');
+      let html = '<option value="">Elige…</option>';
+      if(man.length){ html += '<optgroup label="Mañana">' + man.map(x=>`<option value="${x}">${horaAmPm(x)}</option>`).join('') + '</optgroup>'; }
+      if(tar.length){ html += '<optgroup label="Tarde">' + tar.map(x=>`<option value="${x}">${horaAmPm(x)}</option>`).join('') + '</optgroup>'; }
+      if(!man.length && !tar.length) html = '<option value="">Sin horas libres ese día</option>';
+      sel.innerHTML = html;
+    }
+
+    function masMediaHora(hhmm){
+      let [h,m]=hhmm.split(':').map(Number); m+=30; if(m>=60){m-=60;h++;}
+      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+    }
+
+    async function enviarSolicitud(){
+      if(enviando) return;
+      const nombre = document.getElementById('fNombre').value.trim();
+      const tel = document.getElementById('fTel').value.replace(/\D/g,'');
+      const motivo = document.getElementById('fMotivo').value;
+      const fecha = document.getElementById('fFecha').value;
+      const horaInicio = document.getElementById('fHora').value;
+      if(!nombre){ alert('Escribe tu nombre completo.'); return; }
+      if(tel.length !== 10){ alert('Escribe tu teléfono a 10 dígitos.'); return; }
+      if(!fecha){ alert('Elige un día.'); return; }
+      if(!horaInicio){ alert('Elige una hora.'); return; }
+      if(!fbOK || !authListo){ alert('Sin conexión. Revisa tu internet e intenta de nuevo.'); return; }
+
+      const btn = document.getElementById('btnEnviar');
+      enviando = true; btn.textContent = 'Enviando…'; btn.disabled = true;
+      try{
+        await db.collection('solicitudes').add({
+          nombre: nombre,
+          telefono: tel,
+          fecha: fecha,
+          horaInicio: horaInicio,
+          horaFin: masMediaHora(horaInicio),
+          motivo: motivo,
+          estado: 'pendiente',
+          fechaCreacion: Date.now(),
+          esNuevoPaciente: true
+        });
+        mostrarExito();
+      }catch(e){
+        console.error('enviar', e);
+        alert('No se pudo enviar tu solicitud. Revisa tu internet o contáctanos por WhatsApp.');
+        btn.textContent = 'Enviar solicitud'; btn.disabled = false;
+      }
+      enviando = false;
+    }
+
+    function mostrarExito(){
+      document.getElementById('formCard').innerHTML = `
+        <div class="exito">
+          <div class="ico">📌</div>
+          <h2>¡Tu cita quedó apartada!</h2>
+          <p>El Dr. Alvarado se comunicará contigo muy pronto para confirmar tu cita y darte todos los detalles. Mantente atento a tu WhatsApp.</p>
+          <a class="btn-wa" href="#" onclick="waDirecto(); return false;">💬 Escríbenos por WhatsApp</a>
+        </div>`;
+    }
+
+    function waDirecto(){
+      const msg = encodeURIComponent("Hola, quiero agendar una cita en Dentilike. Vi su página de citas.");
+      window.open(`https://wa.me/${TEL_CLINICA}?text=${msg}`, '_blank');
+    }
+
+    window.addEventListener('DOMContentLoaded', iniciar);
+  </script>
+</body>
+</html>
