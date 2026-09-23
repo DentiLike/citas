@@ -6,6 +6,16 @@
 <title>Agenda tu cita · Dentilike</title>
 <meta name="description" content="Agenda tu primera cita en Dentilike. Valoración con especialista en San Luis Potosí.">
 <meta name="theme-color" content="#124578">
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Agenda tu cita · Dentilike"/>
+<meta property="og:description" content="¡Sonríe con confianza! Agenda tu cita hoy mismo con el Dr. Miguel Alvarado."/>
+<meta property="og:image" content="https://citas.dentilike.com.mx/og-citas.jpg"/>
+<meta property="og:image:type" content="image/jpeg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:url" content="https://citas.dentilike.com.mx/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://citas.dentilike.com.mx/og-citas.jpg"/>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -39,6 +49,12 @@
   .btn:active{transform:scale(.98);}
   .btn:disabled{opacity:.6;}
   .nota{font-size:.76rem; color:var(--gris); text-align:center; margin-top:14px; line-height:1.5;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{background:var(--fondo); border:1.5px solid var(--borde); color:var(--tinta); border-radius:12px; padding:11px 14px; font-size:.86rem; font-weight:600; cursor:pointer; transition:all .15s;}
+  .chip.sel{background:var(--azul); color:#fff; border-color:var(--azul); font-weight:700;}
+  .chip:active{transform:scale(.96);}
+  .turno{width:100%; color:var(--gris); font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; margin:6px 0 2px;}
+  .hint{color:var(--gris-cl); font-size:.85rem; padding:4px 0;}
 
   .exito{text-align:center; padding:20px 6px;}
   .exito .ico{font-size:3.4rem; margin-bottom:10px;}
@@ -86,16 +102,11 @@
         <option value="Otro">Otro</option>
       </select>
 
-      <div class="fila">
-        <div>
-          <label>Día</label>
-          <select id="fFecha"><option value="">Elige…</option></select>
-        </div>
-        <div>
-          <label>Hora</label>
-          <select id="fHora"><option value="">Elige día primero</option></select>
-        </div>
-      </div>
+      <label>Elige el día</label>
+      <div class="chips" id="chipsFecha"><div class="hint">Cargando…</div></div>
+
+      <label>Elige la hora</label>
+      <div class="chips" id="chipsHora"><div class="hint">Primero elige un día 👆</div></div>
 
       <button class="btn" id="btnEnviar" onclick="enviarSolicitud()">Enviar solicitud</button>
       <div class="nota">Tu cita no queda agendada hasta que confirmemos contigo. Solo es una solicitud — nosotros te contactamos.</div>
@@ -166,26 +177,24 @@
     const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
     const DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
 
+    let fechaSel = '', horaSel = '';
     function poblarFechas(){
-      const sel = document.getElementById('fFecha');
+      const cont = document.getElementById('chipsFecha');
       const hoy = new Date();
-      let html = '<option value="">Elige…</option>';
-      let hayDias = false;
-      for(let i=1; i<=45; i++){
+      let html = '';
+      let hay = false;
+      for(let i=1; i<=14; i++){ // solo 2 semanas
         const d = new Date(hoy); d.setDate(hoy.getDate()+i);
         if(d.getDay()===0) continue; // sin domingos
         const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        // si hay disponibilidad publicada, solo mostrar días con huecos libres
         if(disponibilidad){
           if(!disponibilidad[iso] || !disponibilidad[iso].length) continue;
         }
-        const label = `${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}`;
-        html += `<option value="${iso}">${label}</option>`;
-        hayDias = true;
+        const label = `${DIAS[d.getDay()].slice(0,3)} ${d.getDate()} ${MESES[d.getMonth()].slice(0,3)}`;
+        html += `<button class="chip" data-fecha="${iso}" onclick="pickFecha('${iso}')">${label}</button>`;
+        hay = true;
       }
-      if(!hayDias) html = '<option value="">No hay fechas disponibles ahora</option>';
-      sel.innerHTML = html;
-      sel.onchange = poblarHoras;
+      cont.innerHTML = hay ? html : '<div class="hint">No hay fechas disponibles ahora. Escríbenos por WhatsApp 💬</div>';
     }
 
     function horaAmPm(hhmm){
@@ -199,26 +208,24 @@
       while(h<hf || (h===hf && m<mf)){ out.push(`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`); m+=30; if(m>=60){m-=60;h++;} }
       return out;
     }
-    function poblarHoras(){
-      const sel = document.getElementById('fHora');
-      const fecha = document.getElementById('fFecha').value;
+    function pickFecha(iso){
+      fechaSel = iso; horaSel = '';
+      document.querySelectorAll('#chipsFecha .chip').forEach(b=>b.classList.toggle('sel', b.dataset.fecha===iso));
+      // horas
       let horasLibres;
-      if(disponibilidad && fecha && disponibilidad[fecha]){
-        // usar solo las horas libres reales de ese día
-        horasLibres = disponibilidad[fecha];
-      } else {
-        // respaldo: todas las horas de la clínica
-        const h = horarios || {};
-        horasLibres = [...horasEntre(h.mInicio,h.mFin), ...horasEntre(h.vInicio,h.vFin)];
-      }
-      // separar mañana/tarde por si acaso (antes de las 14:00 = mañana)
+      if(disponibilidad && disponibilidad[iso]){ horasLibres = disponibilidad[iso]; }
+      else { const h=horarios||{}; horasLibres = [...horasEntre(h.mInicio,h.mFin), ...horasEntre(h.vInicio,h.vFin)]; }
       const man = horasLibres.filter(x=>x < '14:00');
       const tar = horasLibres.filter(x=>x >= '14:00');
-      let html = '<option value="">Elige…</option>';
-      if(man.length){ html += '<optgroup label="Mañana">' + man.map(x=>`<option value="${x}">${horaAmPm(x)}</option>`).join('') + '</optgroup>'; }
-      if(tar.length){ html += '<optgroup label="Tarde">' + tar.map(x=>`<option value="${x}">${horaAmPm(x)}</option>`).join('') + '</optgroup>'; }
-      if(!man.length && !tar.length) html = '<option value="">Sin horas libres ese día</option>';
-      sel.innerHTML = html;
+      let html = '';
+      if(man.length){ html += '<div class="turno">Mañana</div>' + man.map(x=>`<button class="chip hora" data-hora="${x}" onclick="pickHora('${x}')">${horaAmPm(x)}</button>`).join(''); }
+      if(tar.length){ html += '<div class="turno">Tarde</div>' + tar.map(x=>`<button class="chip hora" data-hora="${x}" onclick="pickHora('${x}')">${horaAmPm(x)}</button>`).join(''); }
+      if(!man.length && !tar.length) html = '<div class="hint">Sin horas libres ese día.</div>';
+      document.getElementById('chipsHora').innerHTML = html;
+    }
+    function pickHora(h){
+      horaSel = h;
+      document.querySelectorAll('#chipsHora .hora').forEach(b=>b.classList.toggle('sel', b.dataset.hora===h));
     }
 
     function masMediaHora(hhmm){
@@ -231,8 +238,8 @@
       const nombre = document.getElementById('fNombre').value.trim();
       const tel = document.getElementById('fTel').value.replace(/\D/g,'');
       const motivo = document.getElementById('fMotivo').value;
-      const fecha = document.getElementById('fFecha').value;
-      const horaInicio = document.getElementById('fHora').value;
+      const fecha = fechaSel;
+      const horaInicio = horaSel;
       if(!nombre){ alert('Escribe tu nombre completo.'); return; }
       if(tel.length !== 10){ alert('Escribe tu teléfono a 10 dígitos.'); return; }
       if(!fecha){ alert('Elige un día.'); return; }
