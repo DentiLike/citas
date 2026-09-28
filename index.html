@@ -42,6 +42,9 @@
   .topbar{position:sticky; top:0; z-index:20; background:rgba(255,255,255,.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-bottom:1px solid var(--borde); padding-top:env(safe-area-inset-top,0px);}
   .topbar-in{max-width:1080px; margin:0 auto; height:var(--header-h); padding:0 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;}
   .topbar-logo{height:40px; width:auto;}
+  .slp-bar{background:var(--azul); color:#fff; text-align:center; font-weight:700; font-size:.82rem; letter-spacing:.01em; padding:7px 14px; display:flex; align-items:center; justify-content:center; gap:7px;}
+  .slp-bar svg{width:15px; height:15px; flex:0 0 15px;}
+  .slp-bar b{font-weight:800;}
   .topbar-cta{display:inline-flex; align-items:center; gap:7px; background:#25D366; color:#fff; text-decoration:none; font-family:var(--display); font-weight:600; font-size:.95rem; padding:9px 16px; border-radius:999px; white-space:nowrap; transition:background .2s, opacity .25s, transform .25s;}
   .topbar-cta:hover{filter:brightness(.95);}
   .topbar-cta svg{width:18px; height:18px;}
@@ -68,6 +71,7 @@
   .ubi-mini{display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:7px 12px; border-radius:999px; background:var(--teal-cl); color:var(--azul); font-size:.85rem; font-weight:700; text-decoration:none; transition:background .2s;}
   .ubi-mini:hover{background:#d2efec;}
   .ubi-mini svg{width:16px; height:16px; flex:0 0 16px;}
+  .ubi-mini b{font-weight:800;}
   .btn-mapa{display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--azul); text-decoration:none; padding:12px 18px; border-radius:14px; font-weight:800; margin-top:12px; transition:filter .2s;}
   .btn-mapa:hover{filter:brightness(.95);}
   .btn-mapa svg{width:18px; height:18px;}
@@ -154,12 +158,14 @@
     </div>
   </header>
 
+  <div class="slp-bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Consultorio dental en <b>San Luis Potosí</b></div>
+
   <main id="inicio">
     <section class="agenda wrap" id="agenda">
       <div class="agenda-cab">
         <h1>Agenda tu cita dental</h1>
-        <p>Estás a un paso de mejorar tu sonrisa. Elige el día y la hora que te acomoden en el consultorio del Dr. Miguel Alvarado, en San Luis Potosí.</p>
-        <a class="ubi-mini" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Himno+Nacional+1902-C,+Tangamanga,+San+Luis+Potos%C3%AD,+S.L.P." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Himno Nacional 1902-C, Tangamanga</a>
+        <p>Estás a un paso de mejorar tu sonrisa. Elige el día y la hora que te acomoden con el Dr. Miguel Alvarado.</p>
+        <a class="ubi-mini" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Himno+Nacional+1902-C,+Tangamanga,+San+Luis+Potos%C3%AD,+S.L.P." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><b>San Luis Potosí</b> · Himno Nacional 1902-C, Tangamanga</a>
       </div>
 
       <div class="card" id="formCard">
