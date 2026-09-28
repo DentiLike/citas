@@ -1,7 +1,7 @@
 // Service Worker — ARRANQUE INSTANTÁNEO (para datos móviles lentos)
 // App: citas
-const CACHE_NAME = "citas-v22";
-const ASSETS = ["./", "./index.html", "./manifest.json"];
+const CACHE_NAME = "citas-v26";
+const ASSETS = ["./", "./index.html"];
 
 self.addEventListener("install", (e) => {
   self.skipWaiting();
