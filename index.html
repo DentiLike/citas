@@ -208,7 +208,7 @@
         <button class="btn" id="btnEnviar" onclick="enviarSolicitud()">Enviar solicitud</button>
         </div>
         <div class="nota">Tu cita no queda agendada hasta que confirmemos contigo. Solo es una solicitud — nosotros te contactamos.</div>
-        <div class="sync"><span class="dot" id="syncDot"></span><span id="syncTxt">Conectando…</span></div>
+        <div class="sync"><span class="dot" id="syncDot"></span><span id="syncTxt">Conectando…</span><span id="offTxt"></span></div>
       </div>
     </section>
 
@@ -259,11 +259,14 @@
       <div class="pie-legal">© <span id="anio">2026</span> Dentilike · Dr. Miguel Alvarado Avilés, Ortodoncia.</div>
     </div>
   </footer>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
+  <script>
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+      navigator.serviceWorker.ready.then(function(){ return caches.match('./index.html'); }).then(function(r){
+        var t=document.getElementById('offTxt'); if(r && t) t.textContent=' · lista sin conexión ✓';
+      }).catch(function(){});
+    }
+  </script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyC4Kws78y5K3-1IuBibxCOo-a11ccuNYUE",
@@ -277,12 +280,22 @@
     let db=null, auth=null, fbOK=false, authListo=false, horarios=null, disponibilidad=null, enviando=false, modo='nuevo', verificado=false, telVerificado='';
     const conTiempo=(p,ms)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),ms))]);
 
-    try {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-      auth = firebase.auth();
-      fbOK = true;
-    } catch(e){ console.error('firebase init', e); }
+    let fbCargando = null;
+    function cargarScript(src){
+      return new Promise((ok, err)=>{ const s=document.createElement('script'); s.src=src; s.onload=ok; s.onerror=err; document.head.appendChild(s); });
+    }
+    function cargarFirebase(){
+      if(fbOK) return Promise.resolve();
+      if(fbCargando) return fbCargando;
+      const base = 'https://www.gstatic.com/firebasejs/10.12.2/firebase-';
+      fbCargando = (async()=>{
+        await cargarScript(base+'app-compat.js');
+        await Promise.all(['firestore','auth','functions'].map(n=>cargarScript(base+n+'-compat.js')));
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore(); auth = firebase.auth(); fbOK = true;
+      })().catch(e=>{ fbCargando=null; throw e; });
+      return fbCargando;
+    }
 
     function setSync(ok){
       const d=document.getElementById('syncDot'), t=document.getElementById('syncTxt');
@@ -291,12 +304,13 @@
     }
 
     async function iniciar(){
-      if(!fbOK){ falloCarga(); return; }
+      if(!navigator.onLine){ falloCarga(); return; }
       try{
         await conTiempo((async()=>{
+          await cargarFirebase();
           await auth.signInAnonymously(); authListo = true; setSync(true);
           await cargarHorarios(); await cargarDisponibilidad();
-        })(), 10000);
+        })(), 12000);
         poblarFechas();
       }catch(e){ console.error('inicio', e); falloCarga(); }
     }
@@ -511,7 +525,7 @@
     });
 
     window.addEventListener('DOMContentLoaded', iniciar);
-    if('serviceWorker' in navigator){ window.addEventListener('load', ()=>navigator.serviceWorker.register('./sw.js').catch(()=>{})); }
+    window.addEventListener('online', ()=>{ if(!authListo) iniciar(); });
   </script>
   <script>
     // --- Solo interfaz: no toca Firebase ni el envío ---
