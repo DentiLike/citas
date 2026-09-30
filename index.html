@@ -191,13 +191,24 @@
         </div>
 
         <div id="bloqueCita">
-        <label for="fMotivo">¿Qué te interesa?</label>
+        <label for="fMotivo">¿Qué tratamiento necesitas?</label>
         <select id="fMotivo">
-          <option value="Valoración/consulta inicial">Valoración / consulta inicial</option>
-          <option value="Ortodoncia">Ortodoncia (brackets)</option>
-          <option value="Seguimiento / control">Seguimiento / control</option>
-          <option value="Urgencia">Urgencia dental</option>
-          <option value="Otro">Otro</option>
+          <optgroup label="Tratamientos generales">
+            <option value="Valoración / consulta inicial">Valoración / consulta inicial</option>
+            <option value="Profilaxis (limpieza)">Profilaxis (limpieza)</option>
+            <option value="Obturación con resina / empaste">Obturación con resina / empaste</option>
+            <option value="Extracción">Extracción</option>
+            <option value="Urgencia dental">Urgencia dental</option>
+          </optgroup>
+          <optgroup label="Ortodoncia">
+            <option value="Ajuste de ortodoncia">Ajuste de ortodoncia</option>
+            <option value="Bracket despegado">Bracket despegado</option>
+            <option value="Revisión de ortodoncia">Revisión de ortodoncia</option>
+            <option value="Urgencia de ortodoncia">Urgencia de ortodoncia</option>
+          </optgroup>
+          <optgroup label="Otros">
+            <option value="Otro">Otro</option>
+          </optgroup>
         </select>
 
         <div class="paso"><span>3</span>Elige el día</div>
