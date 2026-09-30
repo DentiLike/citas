@@ -1,7 +1,13 @@
-// Service Worker — ARRANQUE INSTANTÁNEO (para datos móviles lentos)
-// App: citas
-const CACHE_NAME = "citas-v29";
-const ASSETS = ["./", "./index.html"];
+// Service Worker — la página abre al instante, incluso con poca señal o sin red
+const CACHE_NAME = "citas-v31";
+const SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
+const ASSETS = [
+  "./", "./index.html",
+  SDK + "firebase-app-compat.js",
+  SDK + "firebase-firestore-compat.js",
+  SDK + "firebase-auth-compat.js",
+  SDK + "firebase-functions-compat.js"
+];
 
 self.addEventListener("install", (e) => {
   self.skipWaiting();
@@ -22,17 +28,22 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-  if (e.request.method !== "GET") return;
-  if (e.request.url.includes("firestore") ||
-      e.request.url.includes("firebase") ||
-      e.request.url.includes("googleapis") ||
-      e.request.url.includes("gstatic")) {
-    return;
-  }
-  if (e.request.mode === "navigate") {
+  const req = e.request;
+  if (req.method !== "GET") return;
+  const url = new URL(req.url);
+  const propio = url.origin === self.location.origin;
+  const externoOk =
+    (url.hostname === "www.gstatic.com" && url.pathname.startsWith("/firebasejs/")) ||
+    url.hostname === "fonts.googleapis.com" ||
+    url.hostname === "fonts.gstatic.com";
+  // Firestore, login y funciones van siempre directo a la red
+  if (!propio && !externoOk) return;
+
+  // La página: sale al instante desde el celular y se actualiza en segundo plano
+  if (req.mode === "navigate") {
     e.respondWith(
       caches.match("./index.html").then((cached) => {
-        const red = fetch(e.request).then((res) => {
+        const red = fetch(req).then((res) => {
           if (res && res.status === 200) {
             const copia = res.clone();
             caches.open(CACHE_NAME).then((c) => c.put("./index.html", copia));
@@ -44,12 +55,14 @@ self.addEventListener("fetch", (e) => {
     );
     return;
   }
+
+  // Lo demás (fuentes, Firebase SDK, imágenes): primero el celular, la red de respaldo
   e.respondWith(
-    caches.match(e.request).then((cached) => {
-      const red = fetch(e.request).then((res) => {
-        if (res && res.status === 200) {
+    caches.match(req).then((cached) => {
+      const red = fetch(req).then((res) => {
+        if (res && (res.ok || res.type === "opaque")) {
           const copia = res.clone();
-          caches.open(CACHE_NAME).then((c) => c.put(e.request, copia));
+          caches.open(CACHE_NAME).then((c) => c.put(req, copia));
         }
         return res;
       }).catch(() => cached);

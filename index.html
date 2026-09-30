@@ -18,7 +18,8 @@
 <meta name="twitter:image" content="https://citas.dentilike.com.mx/og-citas.jpg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
 <style>
   :root{
     --azul:#124578; --azul-osc:#0d3560; --teal:#46c3b6; --teal-osc:#2a8f86; --teal-cl:#e3f5f3;
@@ -169,8 +170,13 @@
       </div>
 
       <div class="card" id="formCard">
-        <div class="paso"><span>1</span>Tus datos</div>
-        <label for="fNombre">Tu nombre completo</label>
+        <div class="paso"><span>1</span>¿Ya eres paciente?</div>
+        <div class="chips" style="margin-bottom:6px">
+          <button class="chip sel" id="tipoNuevo" onclick="setTipo('nuevo')">Soy paciente nuevo</button>
+          <button class="chip" id="tipoPac" onclick="setTipo('paciente')">Ya soy paciente</button>
+        </div>
+        <div class="paso"><span>2</span>Tus datos</div>
+        <label for="fNombre" id="lblNombre">Tu nombre completo</label>
         <input type="text" id="fNombre" placeholder="Ej. María López García" autocomplete="name">
 
         <label for="fTel">Tu teléfono (WhatsApp)</label>
@@ -179,21 +185,29 @@
           <input type="tel" id="fTel" placeholder="444 123 4567" inputmode="numeric" autocomplete="tel-national">
         </div>
 
+        <div id="bloqueVerif" style="display:none">
+          <div class="hint" id="msgVerif" style="margin-top:10px"></div>
+          <button class="btn" id="btnVerificar" style="margin-top:14px" onclick="verificarPaciente()">Verificar mi número</button>
+        </div>
+
+        <div id="bloqueCita">
         <label for="fMotivo">¿Qué te interesa?</label>
         <select id="fMotivo">
           <option value="Valoración/consulta inicial">Valoración / consulta inicial</option>
           <option value="Ortodoncia">Ortodoncia (brackets)</option>
+          <option value="Seguimiento / control">Seguimiento / control</option>
           <option value="Urgencia">Urgencia dental</option>
           <option value="Otro">Otro</option>
         </select>
 
-        <div class="paso"><span>2</span>Elige el día</div>
+        <div class="paso"><span>3</span>Elige el día</div>
         <div class="chips" id="chipsFecha"><div class="hint">Cargando fechas disponibles…</div></div>
 
-        <div class="paso"><span>3</span>Elige la hora</div>
+        <div class="paso"><span>4</span>Elige la hora</div>
         <div class="chips" id="chipsHora"><div class="hint">Primero elige un día 👆</div></div>
 
         <button class="btn" id="btnEnviar" onclick="enviarSolicitud()">Enviar solicitud</button>
+        </div>
         <div class="nota">Tu cita no queda agendada hasta que confirmemos contigo. Solo es una solicitud — nosotros te contactamos.</div>
         <div class="sync"><span class="dot" id="syncDot"></span><span id="syncTxt">Conectando…</span></div>
       </div>
@@ -250,6 +264,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyC4Kws78y5K3-1IuBibxCOo-a11ccuNYUE",
@@ -260,7 +275,8 @@
       appId: "1:601464011103:web:e03150d9b86eb40a451eea"
     };
     const TEL_CLINICA = "524446036659";
-    let db=null, auth=null, fbOK=false, authListo=false, horarios=null, disponibilidad=null, enviando=false;
+    let db=null, auth=null, fbOK=false, authListo=false, horarios=null, disponibilidad=null, enviando=false, modo='nuevo', verificado=false, telVerificado='';
+    const conTiempo=(p,ms)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),ms))]);
 
     try {
       firebase.initializeApp(firebaseConfig);
@@ -276,29 +292,28 @@
     }
 
     async function iniciar(){
-      if(!fbOK){ setSync(false); return; }
+      if(!fbOK){ falloCarga(); return; }
       try{
-        await auth.signInAnonymously();
-        authListo = true;
-        setSync(true);
-        await cargarHorarios();
-        await cargarDisponibilidad();
+        await conTiempo((async()=>{
+          await auth.signInAnonymously(); authListo = true; setSync(true);
+          await cargarHorarios(); await cargarDisponibilidad();
+        })(), 10000);
         poblarFechas();
-      }catch(e){ console.error('auth', e); setSync(false); }
+      }catch(e){ console.error('inicio', e); falloCarga(); }
+    }
+    function falloCarga(){
+      setSync(false);
+      document.getElementById('chipsFecha').innerHTML = '<div class="hint">No pudimos cargar los horarios (¿poca señal?). Escríbenos por WhatsApp o llámanos al <a href="tel:+524446036659" style="color:var(--azul); font-weight:800">444 603 6659</a>. <a href="#" onclick="location.reload(); return false;" style="color:var(--azul); font-weight:800">Reintentar</a></div>';
     }
 
     async function cargarHorarios(){
-      try{
-        const doc = await db.collection('config_publica').doc('horarios').get();
-        horarios = doc.exists ? doc.data() : null;
-      }catch(e){ horarios = null; }
+      const doc = await db.collection('config_publica').doc('horarios').get();
+      horarios = doc.exists ? doc.data() : null;
       if(!horarios) horarios = { mInicio:'09:00', mFin:'14:00', vInicio:'16:00', vFin:'20:00' };
     }
     async function cargarDisponibilidad(){
-      try{
-        const doc = await db.collection('config_publica').doc('disponibilidad').get();
-        disponibilidad = (doc.exists && doc.data().dias) ? doc.data().dias : null;
-      }catch(e){ disponibilidad = null; }
+      const doc = await db.collection('config_publica').doc('disponibilidad').get();
+      disponibilidad = (doc.exists && doc.data().dias) ? doc.data().dias : null;
     }
 
     const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -362,13 +377,14 @@
 
     async function enviarSolicitud(){
       if(enviando) return;
-      const nombre = document.getElementById('fNombre').value.trim();
+      const nombre = modo==='paciente' ? 'Paciente registrado' : document.getElementById('fNombre').value.trim();
       const tel = document.getElementById('fTel').value.replace(/\D/g,'');
       const motivo = document.getElementById('fMotivo').value;
       const fecha = fechaSel;
       const horaInicio = horaSel;
       if(!nombre){ alert('Escribe tu nombre completo.'); return; }
       if(tel.length !== 10){ alert('Escribe tu teléfono a 10 dígitos.'); return; }
+      if(modo==='paciente' && (!verificado || tel!==telVerificado)){ alert('Primero verifica tu número.'); return; }
       if(!fecha){ alert('Elige un día.'); return; }
       if(!horaInicio){ alert('Elige una hora.'); return; }
       if(!fbOK || !authListo){ alert('Sin conexión. Revisa tu internet e intenta de nuevo.'); return; }
@@ -376,7 +392,7 @@
       const btn = document.getElementById('btnEnviar');
       enviando = true; btn.textContent = 'Enviando…'; btn.disabled = true;
       try{
-        await db.collection('solicitudes').add({
+        await conTiempo(db.collection('solicitudes').add({
           nombre: nombre,
           telefono: tel,
           fecha: fecha,
@@ -385,12 +401,12 @@
           motivo: motivo,
           estado: 'pendiente',
           fechaCreacion: Date.now(),
-          esNuevoPaciente: true
-        });
+          esNuevoPaciente: modo!=='paciente'
+        }), 12000);
         mostrarExito();
       }catch(e){
         console.error('enviar', e);
-        alert('No se pudo enviar tu solicitud. Revisa tu internet o contáctanos por WhatsApp.');
+        alert('No pudimos confirmar el envío por la señal. Si no te escribimos pronto, contáctanos por WhatsApp.');
         btn.textContent = 'Enviar solicitud'; btn.disabled = false;
       }
       enviando = false;
@@ -417,7 +433,59 @@
       window.open(`https://wa.me/${TEL_CLINICA}?text=${msg}`, '_blank');
     }
 
+    function setTipo(t){
+      modo=t; verificado=false; telVerificado='';
+      document.getElementById('tipoNuevo').classList.toggle('sel',t==='nuevo');
+      document.getElementById('tipoPac').classList.toggle('sel',t==='paciente');
+      const nuevo = t==='nuevo';
+      document.getElementById('lblNombre').style.display = nuevo?'':'none';
+      document.getElementById('fNombre').style.display = nuevo?'':'none';
+      document.getElementById('bloqueVerif').style.display = nuevo?'none':'';
+      document.getElementById('bloqueCita').style.display = nuevo?'':'none';
+      resetVerif();
+    }
+    function resetVerif(){
+      document.getElementById('msgVerif').textContent='';
+      const b=document.getElementById('btnVerificar'); b.style.display=''; b.disabled=false; b.textContent='Verificar mi número';
+    }
+    function msgWA(txt){
+      document.getElementById('msgVerif').innerHTML = txt+' <a href="#" onclick="waDirecto(); return false;" style="color:var(--azul); font-weight:800">Escríbenos por WhatsApp</a>';
+    }
+    async function verificarPaciente(){
+      const tel = document.getElementById('fTel').value.replace(/\D/g,'');
+      const msg = document.getElementById('msgVerif');
+      if(tel.length !== 10){ msg.textContent='Escribe tu teléfono a 10 dígitos.'; return; }
+      if(!fbOK || !authListo){ msg.textContent='Sin conexión. Revisa tu internet e intenta de nuevo.'; return; }
+      const btn = document.getElementById('btnVerificar');
+      btn.disabled = true; btn.textContent = 'Verificando…'; msg.textContent='';
+      try{
+        const r = await conTiempo(firebase.functions().httpsCallable('verificarPaciente')({telefono: tel}), 12000);
+        const d = r.data || {};
+        if(d.ok){
+          verificado = true; telVerificado = tel;
+          msg.textContent = '✅ Número verificado. Elige tu día y hora.';
+          btn.style.display = 'none';
+          document.getElementById('bloqueCita').style.display = '';
+          return;
+        }
+        msgWA(d.bloqueado ? 'Demasiados intentos. Intenta más tarde o comunícate con el Dr.'
+                          : 'No pudimos verificar tus datos. Revisa tu número o comunícate con el Dr.');
+      }catch(e){
+        console.error('verificar', e);
+        msgWA('No se pudo verificar en este momento. Intenta de nuevo o comunícate con el Dr.');
+      }
+      btn.disabled = false; btn.textContent = 'Verificar mi número';
+    }
+    document.getElementById('fTel').addEventListener('input', ()=>{
+      if(modo==='paciente' && verificado){
+        verificado=false; telVerificado='';
+        document.getElementById('bloqueCita').style.display='none';
+        resetVerif();
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', iniciar);
+    if('serviceWorker' in navigator){ window.addEventListener('load', ()=>navigator.serviceWorker.register('./sw.js').catch(()=>{})); }
   </script>
   <script>
     // --- Solo interfaz: no toca Firebase ni el envío ---
