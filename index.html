@@ -101,6 +101,7 @@
   .chip:hover{border-color:var(--teal);}
   .chip.sel{background:var(--azul); color:#fff; border-color:var(--azul);}
   .chip:active{transform:scale(.96);}
+  .chip.area{flex:1 1 calc(50% - 4px); padding:16px 10px; font-size:1rem; text-align:center;}
   .turno{width:100%; color:var(--gris); font-size:.82rem; font-weight:700; margin:8px 0 0;}
   .turno:first-child{margin-top:0;}
   .hint{color:var(--gris-cl); font-size:.92rem; padding:4px 0;}
@@ -191,30 +192,17 @@
         </div>
 
         <div id="bloqueCita">
-        <label for="fMotivo">¿Qué tratamiento necesitas?</label>
-        <select id="fMotivo">
-          <optgroup label="Tratamientos generales">
-            <option value="Valoración / consulta inicial">Valoración / consulta inicial</option>
-            <option value="Profilaxis (limpieza)">Profilaxis (limpieza)</option>
-            <option value="Obturación con resina / empaste">Obturación con resina / empaste</option>
-            <option value="Extracción">Extracción</option>
-            <option value="Urgencia dental">Urgencia dental</option>
-          </optgroup>
-          <optgroup label="Ortodoncia">
-            <option value="Ajuste de ortodoncia">Ajuste de ortodoncia</option>
-            <option value="Bracket despegado">Bracket despegado</option>
-            <option value="Revisión de ortodoncia">Revisión de ortodoncia</option>
-            <option value="Urgencia de ortodoncia">Urgencia de ortodoncia</option>
-          </optgroup>
-          <optgroup label="Otros">
-            <option value="Otro">Otro</option>
-          </optgroup>
-        </select>
+        <div class="paso"><span>3</span>¿Qué tratamiento necesitas?</div>
+        <div class="chips" id="chipsArea">
+          <button class="chip area" data-area="general" onclick="pickArea('general')">Odontología general</button>
+          <button class="chip area" data-area="orto" onclick="pickArea('orto')">Ortodoncia</button>
+        </div>
+        <div class="chips" id="chipsMotivo" style="margin-top:10px"></div>
 
-        <div class="paso"><span>3</span>Elige el día</div>
+        <div class="paso"><span>4</span>Elige el día</div>
         <div class="chips" id="chipsFecha"><div class="hint">Cargando fechas disponibles…</div></div>
 
-        <div class="paso"><span>4</span>Elige la hora</div>
+        <div class="paso"><span>5</span>Elige la hora</div>
         <div class="chips" id="chipsHora"><div class="hint">Primero elige un día 👆</div></div>
 
         <button class="btn" id="btnEnviar" onclick="enviarSolicitud()">Enviar solicitud</button>
@@ -390,11 +378,12 @@
       if(enviando) return;
       const nombre = modo==='paciente' ? 'Paciente registrado' : document.getElementById('fNombre').value.trim();
       const tel = document.getElementById('fTel').value.replace(/\D/g,'');
-      const motivo = document.getElementById('fMotivo').value;
+      const motivo = motivoSel;
       const fecha = fechaSel;
       const horaInicio = horaSel;
       if(!nombre){ alert('Escribe tu nombre completo.'); return; }
       if(tel.length !== 10){ alert('Escribe tu teléfono a 10 dígitos.'); return; }
+      if(!motivo){ alert('Elige qué tratamiento necesitas.'); return; }
       if(modo==='paciente' && (!verificado || tel!==telVerificado)){ alert('Primero verifica tu número.'); return; }
       if(!fecha){ alert('Elige un día.'); return; }
       if(!horaInicio){ alert('Elige una hora.'); return; }
@@ -442,6 +431,22 @@
     function waDirecto(){
       const msg = encodeURIComponent("Hola, quiero agendar una cita en Dentilike. Vi su página de citas.");
       window.open(`https://wa.me/${TEL_CLINICA}?text=${msg}`, '_blank');
+    }
+
+    const MOTIVOS = {
+      general:['Valoración / consulta inicial','Profilaxis (limpieza)','Obturación con resina / empaste','Extracción','Urgencia dental','Otro'],
+      orto:['Ajuste de ortodoncia','Bracket despegado','Revisión de ortodoncia','Urgencia de ortodoncia','Otro']
+    };
+    let areaSel='', motivoSel='';
+    function pickArea(a){
+      areaSel=a; motivoSel='';
+      document.querySelectorAll('#chipsArea .chip').forEach(b=>b.classList.toggle('sel', b.dataset.area===a));
+      document.getElementById('chipsMotivo').innerHTML = MOTIVOS[a].map((m,i)=>`<button class="chip" data-i="${i}" onclick="pickMotivo(${i})">${m}</button>`).join('');
+    }
+    function pickMotivo(i){
+      const m = MOTIVOS[areaSel][i];
+      motivoSel = m==='Otro' ? 'Otro ('+(areaSel==='orto'?'ortodoncia':'general')+')' : m;
+      document.querySelectorAll('#chipsMotivo .chip').forEach(b=>b.classList.toggle('sel', Number(b.dataset.i)===i));
     }
 
     function setTipo(t){
