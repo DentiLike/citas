@@ -421,11 +421,21 @@
           <p>El Dr. Alvarado te escribirá por WhatsApp para confirmar tu cita y darte todos los detalles. Mantente atento a tu WhatsApp.</p>
           <p class="dir">📍 Av. Himno Nacional 1902-C, Tangamanga. A un lado de Médica Florencia, frente a la gasolinera Mobil de Clouthier.</p>
           <div class="acc-ex">
-            <a class="btn-mapa" href="https://www.google.com/maps/search/?api=1&query=Av.+Himno+Nacional+1902-C,+Tangamanga,+San+Luis+Potos%C3%AD,+S.L.P." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 21 3l-8 18-2-8-8-2Z"/></svg>Cómo llegar</a>
+            <a class="btn-mapa" id="btnCerrar" href="#" onclick="cerrarPagina(); return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Cerrar página</a>
             <a class="btn-wa" href="#" onclick="waDirecto(); return false;">💬 Escríbenos por WhatsApp</a>
           </div>
         </div>`;
       card.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+
+    function cerrarPagina(){
+      window.close();
+      // Si el navegador no permite cerrarla solo, avisamos que ya puede cerrarla
+      setTimeout(()=>{
+        const p=document.querySelector('#formCard p');
+        if(p) p.textContent='Tu solicitud ya está enviada. Ya puedes cerrar esta pestaña; te escribiremos por WhatsApp.';
+        const b=document.getElementById('btnCerrar'); if(b) b.style.display='none';
+      }, 400);
     }
 
     function waDirecto(){
