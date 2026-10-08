@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Agenda tu cita · Dentilike</title>
-<meta name="description" content="Agenda tu primera cita en Dentilike. Valoración con especialista en San Luis Potosí.">
+<title>Agenda tu cita dental · Dentilike San Luis Potosí</title>
+<meta name="description" content="Consultorio dental Dentilike en San Luis Potosí. Agenda tu cita de ortodoncia con el Dr. Miguel Alvarado.">
 <meta name="theme-color" content="#124578">
 <meta property="og:type" content="website"/>
-<meta property="og:title" content="Agenda tu cita · Dentilike"/>
-<meta property="og:description" content="¡Sonríe con confianza! Agenda tu cita hoy mismo con el Dr. Miguel Alvarado."/>
+<meta property="og:title" content="Agenda tu cita dental · Dentilike San Luis Potosí"/>
+<meta property="og:description" content="Consultorio dental de ortodoncia en San Luis Potosí. Agenda tu cita con el Dr. Miguel Alvarado."/>
 <meta property="og:image" content="https://citas.dentilike.com.mx/og-citas.jpg"/>
 <meta property="og:image:type" content="image/jpeg"/>
 <meta property="og:image:width" content="1200"/>
@@ -16,123 +16,257 @@
 <meta property="og:url" content="https://citas.dentilike.com.mx/"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://citas.dentilike.com.mx/og-citas.jpg"/>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
 <style>
   :root{
-    --azul:#124578; --azul-osc:#0d3560; --teal:#46c3b6; --teal-osc:#2e959d;
-    --tinta:#1e293b; --gris:#64748b; --gris-cl:#94a3b8; --borde:#e2e8f0;
-    --ok:#059669; --fondo:#eef2f7; --sombra:0 10px 30px rgba(18,69,120,.10);
+    --azul:#124578; --azul-osc:#0d3560; --teal:#46c3b6; --teal-osc:#2a8f86; --teal-cl:#e3f5f3;
+    --tinta:#1b2b3f; --gris:#5b6b7e; --gris-cl:#8a99aa; --borde:#dbe7ec;
+    --ok:#059669; --fondo:#f6fbfb; --papel:#ffffff;
+    --sombra:0 14px 40px rgba(18,69,120,.10);
+    --display:'Fredoka','Nunito',system-ui,sans-serif;
+    --texto:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --header-h:64px;
+    color-scheme:light;
   }
-  *{box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif;}
-  body{background:var(--fondo); color:var(--tinta); min-height:100vh; padding:0 0 40px;}
-  .topbar{background:var(--azul); color:#fff; padding:16px 20px calc(16px + env(safe-area-inset-top,0px)); display:flex; align-items:center; gap:12px; box-shadow:0 3px 14px rgba(18,69,120,.25);}
-  .topbar .logo-ico{width:40px; height:40px; border-radius:11px; background:rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; font-size:1.4rem;}
-  .topbar .marca{font-weight:700; font-size:1.2rem; font-family:'Fredoka',sans-serif;}
-  .topbar .sub{font-size:.72rem; opacity:.85;}
-  .wrap{max-width:480px; margin:0 auto; padding:0 18px;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--fondo); color:var(--tinta); font-family:var(--texto); font-size:16px; line-height:1.5; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  button, input, select{font-family:inherit;}
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  :focus-visible{outline:3px solid var(--teal); outline-offset:2px; border-radius:10px;}
 
-  .hero{text-align:center; padding:26px 10px 10px;}
-  .hero h1{font-size:1.5rem; color:var(--azul-osc); font-family:'Fredoka',sans-serif; margin-bottom:8px;}
-  .hero p{font-size:.9rem; color:var(--gris); line-height:1.5;}
+  /* ---------- Header ---------- */
+  .topbar{position:sticky; top:0; z-index:20; background:rgba(255,255,255,.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-bottom:1px solid var(--borde); padding-top:env(safe-area-inset-top,0px);}
+  .topbar-in{max-width:1080px; margin:0 auto; height:var(--header-h); padding:0 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .topbar-logo{height:40px; width:auto;}
+  .slp-bar{background:var(--azul); color:#fff; text-align:center; font-weight:700; font-size:.82rem; letter-spacing:.01em; padding:7px 14px; display:flex; align-items:center; justify-content:center; gap:7px;}
+  .slp-bar svg{width:15px; height:15px; flex:0 0 15px;}
+  .slp-bar b{font-weight:800;}
+  .topbar-cta{display:inline-flex; align-items:center; gap:7px; background:#25D366; color:#fff; text-decoration:none; font-family:var(--display); font-weight:600; font-size:.95rem; padding:9px 16px; border-radius:999px; white-space:nowrap; transition:background .2s, opacity .25s, transform .25s;}
+  .topbar-cta:hover{filter:brightness(.95);}
+  .topbar-cta svg{width:18px; height:18px;}
+  .topbar-cta.oculto{opacity:0; transform:translateY(-6px); pointer-events:none;}
 
-  .card{background:#fff; border:1.5px solid var(--borde); border-radius:20px; padding:22px 18px; box-shadow:var(--sombra); margin-top:18px;}
-  label{display:block; font-size:.82rem; font-weight:700; color:var(--azul); margin:14px 0 6px;}
-  label:first-child{margin-top:0;}
-  input, select{width:100%; border:1.5px solid var(--borde); border-radius:12px; padding:13px 12px; font-size:.92rem; font-family:inherit; color:var(--tinta); background:#fff; -webkit-appearance:none; appearance:none;}
-  input:focus, select:focus{outline:none; border-color:var(--teal);}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 20px;}
+
+  /* ---------- Intro compacta ---------- */
+  .link-wa{color:var(--azul); font-weight:700; font-size:.95rem; text-decoration:underline; text-decoration-color:var(--teal); text-decoration-thickness:2px; text-underline-offset:4px;}
+
+  /* ---------- Confianza ---------- */
+  .confianza{background:var(--papel); border-top:1px solid var(--borde); border-bottom:1px solid var(--borde);}
+  .confianza ul{list-style:none; display:grid; gap:0; max-width:1080px; margin:0 auto; padding:8px 20px;}
+  .confianza li{display:flex; gap:14px; align-items:flex-start; padding:14px 0; border-bottom:1px dashed var(--borde);}
+  .confianza li:last-child{border-bottom:0;}
+  .ico-c{flex:0 0 44px; height:44px; border-radius:14px; background:var(--teal-cl); color:var(--azul); display:flex; align-items:center; justify-content:center;}
+  .ico-c svg{width:24px; height:24px;}
+  .confianza h3{font-family:var(--display); font-weight:600; color:var(--azul-osc); font-size:1.15rem; line-height:1.2; margin-bottom:3px;}
+  .confianza p{color:var(--gris); font-size:.93rem;}
+
+  /* ---------- Formulario ---------- */
+  .agenda{padding-top:22px; padding-bottom:44px; scroll-margin-top:calc(var(--header-h) + env(safe-area-inset-top,0px));}
+  .agenda-cab{text-align:center; max-width:32rem; margin:0 auto 18px;}
+  .ubi-mini{display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:7px 12px; border-radius:999px; background:var(--teal-cl); color:var(--azul); font-size:.85rem; font-weight:700; text-decoration:none; transition:background .2s;}
+  .ubi-mini:hover{background:#d2efec;}
+  .ubi-mini svg{width:16px; height:16px; flex:0 0 16px;}
+  .ubi-mini b{font-weight:800;}
+  .btn-mapa{display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--azul); text-decoration:none; padding:12px 18px; border-radius:14px; font-weight:800; margin-top:12px; transition:filter .2s;}
+  .btn-mapa:hover{filter:brightness(.95);}
+  .btn-mapa svg{width:18px; height:18px;}
+  .pie .ref{font-size:.88rem; color:#9fb4ca; margin-top:4px;}
+  .exito .acc-ex{display:flex; flex-direction:column; align-items:center; gap:10px;}
+  .exito .btn-mapa{margin-top:0; background:var(--teal-cl);}
+  .exito .dir{font-size:.88rem; color:var(--gris); margin:-8px 0 18px;}
+  .agenda-cab h1{font-family:var(--display); font-weight:600; color:var(--azul-osc); font-size:clamp(1.6rem,5vw,2.2rem); line-height:1.1; margin-bottom:8px;}
+  .agenda-cab p{color:var(--gris);}
+
+  .card{max-width:560px; margin:0 auto; background:var(--papel); border:1.5px solid var(--borde); border-radius:24px; padding:26px 20px 22px; box-shadow:var(--sombra);}
+  .paso{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; color:var(--azul); font-size:1.12rem; margin:26px 0 12px;}
+  .paso:first-child{margin-top:0;}
+  .paso span{flex:0 0 30px; height:30px; border-radius:50%; background:var(--azul); color:#fff; font-size:.95rem; display:flex; align-items:center; justify-content:center;}
+  label{display:block; font-size:.86rem; font-weight:700; color:var(--tinta); margin:14px 0 6px;}
+  .paso + label{margin-top:0;}
+  input, select{width:100%; border:1.5px solid var(--borde); border-radius:12px; padding:13px 12px; font-size:1rem; color:var(--tinta); background:#fff; -webkit-appearance:none; appearance:none; transition:border-color .15s, box-shadow .15s;}
+  select{padding-right:40px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23124578' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center;}
+  input:focus, select:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 4px rgba(70,195,182,.18);}
   input::placeholder{color:var(--gris-cl);}
-  .fila{display:flex; gap:10px;}
-  .fila > div{flex:1;}
   .tel-group{display:flex; align-items:stretch; gap:8px;}
-  .tel-prefix{display:flex; align-items:center; padding:0 12px; background:var(--fondo); border:1.5px solid var(--borde); border-radius:12px; font-weight:700; color:var(--gris); font-size:.85rem; white-space:nowrap;}
-  .btn{width:100%; background:var(--azul); color:#fff; border:none; border-radius:14px; padding:15px; font-weight:700; font-size:1rem; margin-top:22px; cursor:pointer; transition:transform .15s, opacity .2s; font-family:'Fredoka',sans-serif;}
-  .btn:active{transform:scale(.98);}
-  .btn:disabled{opacity:.6;}
-  .nota{font-size:.76rem; color:var(--gris); text-align:center; margin-top:14px; line-height:1.5;}
+  .tel-prefix{display:flex; align-items:center; padding:0 12px; background:var(--fondo); border:1.5px solid var(--borde); border-radius:12px; font-weight:700; color:var(--gris); font-size:.9rem; white-space:nowrap;}
+
   .chips{display:flex; flex-wrap:wrap; gap:8px;}
-  .chip{background:var(--fondo); border:1.5px solid var(--borde); color:var(--tinta); border-radius:12px; padding:11px 14px; font-size:.86rem; font-weight:600; cursor:pointer; transition:all .15s;}
-  .chip.sel{background:var(--azul); color:#fff; border-color:var(--azul); font-weight:700;}
+  .chip{background:var(--fondo); border:1.5px solid var(--borde); color:var(--tinta); border-radius:12px; padding:11px 14px; font-size:.92rem; font-weight:700; cursor:pointer; transition:background .18s, border-color .18s, color .18s, transform .12s;}
+  .chip:hover{border-color:var(--teal);}
+  .chip.sel{background:var(--azul); color:#fff; border-color:var(--azul);}
   .chip:active{transform:scale(.96);}
-  .turno{width:100%; color:var(--gris); font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; margin:6px 0 2px;}
-  .hint{color:var(--gris-cl); font-size:.85rem; padding:4px 0;}
+  .chip.area{flex:1 1 calc(50% - 4px); padding:16px 10px; font-size:1rem; text-align:center;}
+  .turno{width:100%; color:var(--gris); font-size:.82rem; font-weight:700; margin:8px 0 0;}
+  .turno:first-child{margin-top:0;}
+  .hint{color:var(--gris-cl); font-size:.92rem; padding:4px 0;}
 
-  .exito{text-align:center; padding:20px 6px;}
-  .exito .ico{font-size:3.4rem; margin-bottom:10px;}
-  .exito h2{color:var(--azul-osc); font-family:'Fredoka',sans-serif; margin-bottom:12px;}
-  .exito p{color:var(--gris); font-size:.92rem; line-height:1.6; margin-bottom:20px;}
-  .exito .btn-wa{display:inline-flex; align-items:center; gap:8px; background:#25D366; color:#fff; text-decoration:none; padding:13px 22px; border-radius:12px; font-weight:700;}
+  .btn{width:100%; background:var(--azul); color:#fff; border:none; border-radius:16px; padding:16px; font-weight:600; font-size:1.1rem; margin-top:28px; cursor:pointer; transition:transform .15s, background .2s, opacity .2s; font-family:var(--display);}
+  .btn:hover{background:var(--azul-osc);}
+  .btn:active{transform:scale(.98);}
+  .btn:disabled{opacity:.6; cursor:wait;}
+  .nota{font-size:.82rem; color:var(--gris); text-align:center; margin-top:14px; line-height:1.5;}
 
-  .contacto{text-align:center; margin-top:22px; font-size:.82rem; color:var(--gris); line-height:1.7;}
-  .contacto a{color:var(--teal-osc); text-decoration:none; font-weight:600;}
-  .sync{position:fixed; bottom:12px; left:12px; font-size:.7rem; color:var(--gris-cl); display:flex; align-items:center; gap:6px;}
-  .sync .dot{width:9px; height:9px; border-radius:50%; background:var(--gris-cl);}
+  .exito{text-align:center; padding:18px 4px;}
+  .exito .ico{width:76px; height:76px; margin:0 auto 14px; border-radius:50%; background:var(--teal-cl); color:var(--teal-osc); display:flex; align-items:center; justify-content:center; animation:pop .45s cubic-bezier(.3,1.6,.5,1) both;}
+  .exito .ico svg{width:40px; height:40px;}
+  .exito h2{color:var(--azul-osc); font-family:var(--display); font-weight:600; font-size:1.6rem; margin-bottom:10px;}
+  .exito p{color:var(--gris); font-size:.98rem; line-height:1.6; margin-bottom:22px;}
+  .btn-wa{display:inline-flex; align-items:center; gap:9px; background:#25D366; color:#fff; text-decoration:none; padding:13px 22px; border-radius:14px; font-weight:800; transition:filter .2s;}
+  .btn-wa:hover{filter:brightness(.95);}
+  .btn-wa svg{width:20px; height:20px;}
+
+  .sync{display:flex; align-items:center; justify-content:center; gap:6px; margin-top:12px; font-size:.72rem; color:var(--gris-cl);}
+  .sync .dot{width:8px; height:8px; border-radius:50%; background:var(--gris-cl);}
   .sync .dot.ok{background:#22c55e;} .sync .dot.err{background:#ef4444;}
+
+  /* ---------- Footer ---------- */
+  .pie{background:var(--azul-osc); color:#dbe7f2; padding:40px 0 calc(28px + env(safe-area-inset-bottom,0px));}
+  .pie-in{display:grid; gap:26px;}
+  .pie-logo{background:#fff; border-radius:16px; padding:12px 16px; width:fit-content;}
+  .pie-logo img{height:44px; width:auto;}
+  .pie h4{font-family:var(--display); font-weight:600; color:#fff; font-size:1.05rem; margin-bottom:8px;}
+  .pie p, .pie a.tel{font-size:.95rem; color:#c5d6e8; line-height:1.6;}
+  .pie a.tel{text-decoration:none; font-weight:700; color:#fff;}
+  .pie .btn-wa{margin-top:12px;}
+  .pie-legal{border-top:1px solid rgba(255,255,255,.12); margin-top:30px; padding-top:18px; font-size:.8rem; color:#9fb4ca;}
+
+  /* ---------- Escritorio ---------- */
+  @media (min-width:860px){
+    :root{--header-h:72px;}
+    .topbar-logo{height:46px;}
+    .confianza ul{grid-template-columns:repeat(3,1fr); gap:32px; padding:28px 20px;}
+    .confianza li{border-bottom:0; padding:0;}
+    .pie-in{grid-template-columns:1.1fr 1.2fr 1fr 1fr; align-items:start; gap:32px;}
+  }
+
+  @keyframes pop{from{opacity:0; transform:scale(.6);} to{opacity:1; transform:scale(1);}}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *, *::before, *::after{animation:none !important; transition:none !important;}
+  }
 </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="logo-ico">🦷</div>
-    <div>
-      <div class="marca">Dentilike</div>
-      <div class="sub">Ortodoncia y Odontología · San Luis Potosí</div>
+  <header class="topbar">
+    <div class="topbar-in">
+      <a href="#inicio" aria-label="Dentilike, inicio"><img class="topbar-logo" src="data:image/png;base64,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" alt="Dentilike · Dr. Miguel Alvarado, Ortodoncia" width="360" height="89"></a>
+      <a class="topbar-cta" href="#" onclick="waDirecto(); return false;" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>WhatsApp</a>
     </div>
-  </div>
+  </header>
 
-  <div class="wrap">
-    <div class="hero">
-      <h1>Agenda tu cita</h1>
-      <p>¿Aún no eres paciente? Déjanos tus datos y nos pondremos en contacto para confirmar tu valoración con el especialista. Si ya eres paciente de ortodoncia, escribe tu teléfono: si te toca colocación de brackets, te aparecerá aquí.</p>
-    </div>
+  <div class="slp-bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Consultorio dental en <b>San Luis Potosí</b></div>
 
-    <div class="card" id="formCard">
-      <label>¿Ya eres paciente de Dentilike?</label>
-      <select id="fTipo" onchange="cambioTipo()">
-        <option value="nuevo">Soy paciente nuevo</option>
-        <option value="reg">Ya soy paciente</option>
-      </select>
-
-      <label>Tu nombre completo</label>
-      <input type="text" id="fNombre" placeholder="Ej. María López García">
-
-      <label>Tu teléfono (WhatsApp)</label>
-      <div class="tel-group">
-        <span class="tel-prefix">🇲🇽 +52</span>
-        <input type="tel" id="fTel" placeholder="444 123 4567" inputmode="numeric" oninput="revisarTelefono()">
+  <main id="inicio">
+    <section class="agenda wrap" id="agenda">
+      <div class="agenda-cab">
+        <h1>Agenda tu cita dental</h1>
+        <p>Estás a un paso de mejorar tu sonrisa. Elige el día y la hora que te acomoden con el Dr. Miguel Alvarado.</p>
+        <a class="ubi-mini" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Himno+Nacional+1902-C,+Tangamanga,+San+Luis+Potos%C3%AD,+S.L.P." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><b>San Luis Potosí</b> · Himno Nacional 1902-C, Tangamanga</a>
       </div>
 
-      <div id="estadoTel" style="display:none; border-radius:12px; padding:11px 12px; margin-top:12px; font-size:.82rem; line-height:1.5;"></div>
+      <div class="card" id="formCard">
+        <div class="paso"><span>1</span>¿Ya eres paciente?</div>
+        <div class="chips" style="margin-bottom:6px">
+          <button class="chip sel" id="tipoNuevo" onclick="setTipo('nuevo')">Soy paciente nuevo</button>
+          <button class="chip" id="tipoPac" onclick="setTipo('paciente')">Ya soy paciente</button>
+        </div>
+        <div class="paso"><span>2</span>Tus datos</div>
+        <label for="fNombre" id="lblNombre">Tu nombre completo</label>
+        <input type="text" id="fNombre" placeholder="Ej. María López García" autocomplete="name">
 
-      <div id="avisoColoc" style="display:none; background:#e6f7f5; border:1.5px solid var(--teal); border-radius:12px; padding:12px; margin-top:14px; font-size:.84rem; color:var(--azul-osc); line-height:1.5;"></div>
+        <label for="fTel">Tu teléfono (WhatsApp)</label>
+        <div class="tel-group">
+          <span class="tel-prefix">🇲🇽 +52</span>
+          <input type="tel" id="fTel" placeholder="444 123 4567" inputmode="numeric" autocomplete="tel-national">
+        </div>
 
-      <label>¿Qué te interesa?</label>
-      <select id="fMotivo" onchange="cambioMotivo()">
-        <option value="Valoración/consulta inicial">Valoración / consulta inicial</option>
-        <option value="Ortodoncia">Ortodoncia (brackets)</option>
-        <option value="Urgencia">Urgencia dental</option>
-        <option value="Otro">Otro</option>
-      </select>
+        <div id="bloqueVerif" style="display:none">
+          <div class="hint" id="msgVerif" style="margin-top:10px"></div>
+          <button class="btn" id="btnVerificar" style="margin-top:14px" onclick="verificarPaciente()">Verificar mi número</button>
+        </div>
 
-      <label>Elige el día</label>
-      <div class="chips" id="chipsFecha"><div class="hint">Cargando…</div></div>
+        <div id="bloqueCita">
+        <div class="paso"><span>3</span>¿Qué tratamiento necesitas?</div>
+        <div class="chips" id="chipsArea">
+          <button class="chip area" data-area="general" onclick="pickArea('general')">Odontología general</button>
+          <button class="chip area" data-area="orto" onclick="pickArea('orto')">Ortodoncia</button>
+        </div>
+        <div class="chips" id="chipsMotivo" style="margin-top:10px"></div>
 
-      <label>Elige la hora</label>
-      <div class="chips" id="chipsHora"><div class="hint">Primero elige un día 👆</div></div>
+        <div class="paso"><span>4</span>Elige el día</div>
+        <div class="chips" id="chipsFecha"><div class="hint">Cargando fechas disponibles…</div></div>
 
-      <button class="btn" id="btnEnviar" onclick="enviarSolicitud()">Enviar solicitud</button>
-      <div class="nota">Tu cita no queda agendada hasta que confirmemos contigo. Solo es una solicitud — nosotros te contactamos.</div>
+        <div class="paso"><span>5</span>Elige la hora</div>
+        <div class="chips" id="chipsHora"><div class="hint">Primero elige un día 👆</div></div>
+
+        <button class="btn" id="btnEnviar" onclick="enviarSolicitud()">Enviar solicitud</button>
+        </div>
+        <div class="nota">Tu cita no queda agendada hasta que confirmemos contigo. Solo es una solicitud — nosotros te contactamos.</div>
+        <div class="sync"><span class="dot" id="syncDot"></span><span id="syncTxt">Conectando…</span><span id="offTxt"></span></div>
+      </div>
+    </section>
+
+    <section class="confianza" aria-label="Por qué Dentilike">
+      <ul>
+        <li>
+          <div class="ico-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h20"/><rect x="4" y="9.5" width="4" height="5" rx="1"/><rect x="10" y="9.5" width="4" height="5" rx="1"/><rect x="16" y="9.5" width="4" height="5" rx="1"/><path d="M5 5c2 1.5 4 2 7 2s5-.5 7-2M5 19c2-1.5 4-2 7-2s5 .5 7 2"/></svg></div>
+          <div><h3>Ortodoncia</h3><p>Brackets y tratamientos para alinear tus dientes y mejorar tu mordida.</p></div>
+        </li>
+        <li>
+          <div class="ico-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="18" rx="2.5"/><path d="M9 3.5h6v3H9z"/><path d="M9 12l2 2 4-4M9 17.5h6"/></svg></div>
+          <div><h3>Valoración inicial</h3><p>Revisamos tu caso y te explicamos tus opciones antes de empezar.</p></div>
+        </li>
+        <li>
+          <div class="ico-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4.5"/><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"/><path d="m9.5 17.5 2.5 2 2.5-2"/></svg></div>
+          <div><h3>Especialista</h3><p>Te atiende directamente el Dr. Miguel Alvarado, ortodoncista.</p></div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="wrap">
+      <div class="pie-in">
+        <div>
+          <div class="pie-logo"><img src="data:image/png;base64,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" alt="Dentilike" width="360" height="89" loading="lazy"></div>
+          <p style="margin-top:12px">Ortodoncia y odontología en San Luis Potosí.</p>
+        </div>
+        <div>
+          <h4>Ubicación</h4>
+          <p>Av. Himno Nacional 1902-C<br>Fracc. Tangamanga, San Luis Potosí, S.L.P.</p>
+          <p class="ref">A un lado de Médica Florencia, frente a la gasolinera Mobil de Clouthier.</p>
+          <a class="btn-mapa" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Himno+Nacional+1902-C,+Tangamanga,+San+Luis+Potos%C3%AD,+S.L.P." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 21 3l-8 18-2-8-8-2Z"/></svg>Cómo llegar</a>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <p>Teléfono y WhatsApp<br><a class="tel" href="tel:+524446036659">444 603 6659</a></p>
+          <a class="btn-wa" href="#" onclick="waDirecto(); return false;">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+            Escríbenos por WhatsApp
+          </a>
+        </div>
+        <div>
+          <h4>Horario</h4>
+          <p id="pieHorario">Lunes a sábado, con cita previa.</p>
+        </div>
+      </div>
+      <div class="pie-legal">© <span id="anio">2026</span> Dentilike · Dr. Miguel Alvarado Avilés, Ortodoncia.</div>
     </div>
-
-    <div class="contacto">
-      ¿Prefieres escribirnos directo?<br>
-      <a href="#" onclick="waDirecto(); return false;">💬 Contáctanos por WhatsApp</a>
-    </div>
-  </div>
-
-  <div class="sync"><span class="dot" id="syncDot"></span><span id="syncTxt">Conectando…</span></div>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  </footer>
+  <script>
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+      navigator.serviceWorker.ready.then(function(){ return caches.match('./index.html'); }).then(function(r){
+        var t=document.getElementById('offTxt'); if(r && t) t.textContent=' · lista sin conexión ✓';
+      }).catch(function(){});
+    }
+  </script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyC4Kws78y5K3-1IuBibxCOo-a11ccuNYUE",
@@ -143,18 +277,25 @@
       appId: "1:601464011103:web:e03150d9b86eb40a451eea"
     };
     const TEL_CLINICA = "524446036659";
-    let db=null, auth=null, fbOK=false, authListo=false, horarios=null, disponibilidad=null, enviando=false;
-    let regInfo = null;        // datos públicos del teléfono escrito: { reg, coloc } o null si no es paciente registrado
-    let colocTelRevisado = '';
-    const MOTIVOS_NUEVO = [['Valoración/consulta inicial','Valoración / consulta inicial'],['Ortodoncia','Ortodoncia (brackets)'],['Urgencia','Urgencia dental'],['Otro','Otro']];
-    const MOTIVOS_REG = [['Cita de control','Cita de control'],['Revisión','Revisión'],['Dolor o molestia','Dolor o molestia'],['Se me cayó un bracket','Se me cayó un bracket'],['Ajuste','Ajuste'],['Otro','Otro']];
+    let db=null, auth=null, fbOK=false, authListo=false, horarios=null, disponibilidad=null, enviando=false, modo='nuevo', verificado=false, telVerificado='';
+    const conTiempo=(p,ms)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),ms))]);
 
-    try {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-      auth = firebase.auth();
-      fbOK = true;
-    } catch(e){ console.error('firebase init', e); }
+    let fbCargando = null;
+    function cargarScript(src){
+      return new Promise((ok, err)=>{ const s=document.createElement('script'); s.src=src; s.onload=ok; s.onerror=err; document.head.appendChild(s); });
+    }
+    function cargarFirebase(){
+      if(fbOK) return Promise.resolve();
+      if(fbCargando) return fbCargando;
+      const base = 'https://www.gstatic.com/firebasejs/10.12.2/firebase-';
+      fbCargando = (async()=>{
+        await cargarScript(base+'app-compat.js');
+        await Promise.all(['firestore','auth','functions'].map(n=>cargarScript(base+n+'-compat.js')));
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore(); auth = firebase.auth(); fbOK = true;
+      })().catch(e=>{ fbCargando=null; throw e; });
+      return fbCargando;
+    }
 
     function setSync(ok){
       const d=document.getElementById('syncDot'), t=document.getElementById('syncTxt');
@@ -163,30 +304,67 @@
     }
 
     async function iniciar(){
-      if(!fbOK){ setSync(false); return; }
+      if(!navigator.onLine){ falloCarga(); return; }
       try{
-        await auth.signInAnonymously();
-        authListo = true;
-        setSync(true);
-        await cargarHorarios();
-        await cargarDisponibilidad();
+        await conTiempo((async()=>{
+          await cargarFirebase();
+          await auth.signInAnonymously(); authListo = true; setSync(true);
+          await cargarHorarios(); await cargarDisponibilidad();
+        })(), 12000);
         poblarFechas();
-        revisarTelefono();
-      }catch(e){ console.error('auth', e); setSync(false); }
+      }catch(e){ console.error('inicio', e); falloCarga(); }
+    }
+    function falloCarga(){
+      setSync(false);
+      document.getElementById('chipsFecha').innerHTML = '<div class="hint">No pudimos cargar los horarios (¿poca señal?). Escríbenos por WhatsApp o llámanos al <a href="tel:+524446036659" style="color:var(--azul); font-weight:800">444 603 6659</a>. <a href="#" onclick="location.reload(); return false;" style="color:var(--azul); font-weight:800">Reintentar</a></div>';
     }
 
     async function cargarHorarios(){
-      try{
-        const doc = await db.collection('config_publica').doc('horarios').get();
-        horarios = doc.exists ? doc.data() : null;
-      }catch(e){ horarios = null; }
+      const doc = await db.collection('config_publica').doc('horarios').get();
+      horarios = doc.exists ? doc.data() : null;
       if(!horarios) horarios = { mInicio:'09:00', mFin:'14:00', vInicio:'16:00', vFin:'20:00' };
     }
     async function cargarDisponibilidad(){
+      const doc = await db.collection('config_publica').doc('disponibilidad').get();
+      disponibilidad = (doc.exists && doc.data().dias) ? doc.data().dias : null;
+    }
+
+    // ----- Colocación de brackets: solo para paciente ya verificado al que le toca (la publica DentiAgenda) -----
+    let colocDisp = false;
+    function colocNombre(){ return String((horarios && horarios.colocacionNombre) || '').trim() || 'Colocación de brackets'; }
+    function colocMin(){ const m = Number(horarios && horarios.colocacionMin); return [60,90,120].includes(m) ? m : 60; }
+    function colocTexto(){ const m = colocMin(); return m === 60 ? '1 hora' : (m === 90 ? '1 hora y media' : '2 horas'); }
+    function modoColoc(){ return modo === 'paciente' && colocDisp && motivoSel === colocNombre(); }
+    async function hashPacPub(tel10){
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('pacpub|' + tel10));
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+    async function consultarColoc(tel){
+      colocDisp = false;
       try{
-        const doc = await db.collection('config_publica').doc('disponibilidad').get();
-        disponibilidad = (doc.exists && doc.data().dias) ? doc.data().dias : null;
-      }catch(e){ disponibilidad = null; }
+        const d = await db.collection('pacientes_pub').doc(await hashPacPub(tel)).get();
+        colocDisp = !!(d.exists && d.data().coloc === true);
+      }catch(e){ colocDisp = false; }
+      if(colocDisp){
+        // dejamos lista la colocación: ortodoncia → colocación
+        pickArea('orto');
+        pickMotivo(0);
+        const msg = document.getElementById('msgVerif');
+        msg.textContent = '✅ Número verificado. 🦷 ¡Ya puedes agendar tu ' + colocNombre().toLowerCase() + '! Necesitamos ' + colocTexto() + ' completa; solo te mostramos los horarios donde cabe.';
+      } else if(areaSel){ pickArea(areaSel); }
+    }
+    function sumarMinutos(hhmm, min){
+      let [h,m] = hhmm.split(':').map(Number); m += min; h += Math.floor(m/60); m = m % 60;
+      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+    }
+    function horasConBloque(libres, minutos){
+      const n = Math.max(1, Math.round(minutos / 30)), set = new Set(libres);
+      return libres.filter(h => { for(let k = 1; k < n; k++){ if(!set.has(sumarMinutos(h, 30 * k))) return false; } return true; });
+    }
+    function libresDelDia(iso){
+      if(disponibilidad && disponibilidad[iso]) return disponibilidad[iso];
+      const h = horarios || {};
+      return [...horasEntre(h.mInicio,h.mFin), ...horasEntre(h.vInicio,h.vFin)];
     }
 
     const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -211,93 +389,6 @@
         hay = true;
       }
       cont.innerHTML = hay ? html : '<div class="hint">No hay fechas disponibles ahora. Escríbenos por WhatsApp 💬</div>';
-    }
-
-    // ----- Colocación de brackets (solo si el teléfono tiene una pendiente según su ortodoncia) -----
-    function colocBase(){ return String((horarios && horarios.colocacionNombre) || '').trim() || 'Colocación de brackets'; }
-    function colocMin(){ const m = Number(horarios && horarios.colocacionMin); return [60,90,120].includes(m) ? m : 60; }
-    function colocNombre(){ return colocBase(); }
-    function colocTexto(){ const m = colocMin(); return m === 60 ? '1 hora' : (m === 90 ? '1 hora y media' : '2 horas'); }
-    function esRegistrado(){ return document.getElementById('fTipo').value === 'reg'; }
-    function modoColoc(){ return esRegistrado() && !!(regInfo && regInfo.coloc) && document.getElementById('fMotivo').value === '__coloc'; }
-    async function hashPacPub(tel10){
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('pacpub|' + tel10));
-      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    }
-    function mensajeEstado(html, tono){
-      const e = document.getElementById('estadoTel');
-      if(!html){ e.style.display = 'none'; return; }
-      const t = { ok:['#e6f7f5','var(--teal)'], aviso:['#fff7e6','#f0b429'], info:['#eef2f7','var(--borde)'] }[tono || 'info'];
-      e.style.display = 'block'; e.style.background = t[0]; e.style.border = '1.5px solid ' + t[1]; e.innerHTML = html;
-    }
-    // reconstruye la lista de motivos según el tipo de paciente
-    function llenarMotivos(){
-      const sel = document.getElementById('fMotivo'), previo = sel.value;
-      let lista = esRegistrado() ? MOTIVOS_REG.slice() : MOTIVOS_NUEVO.slice();
-      if(esRegistrado() && regInfo && regInfo.coloc) lista.unshift(['__coloc', '🦷 ' + colocNombre()]);
-      sel.innerHTML = lista.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');
-      sel.value = lista.some(([v]) => v === previo) ? previo : lista[0][0];
-    }
-    function refrescarEstado(){
-      const tel = document.getElementById('fTel').value.replace(/\D/g,'');
-      const av = document.getElementById('avisoColoc');
-      av.style.display = 'none';
-      if(tel.length !== 10){ mensajeEstado(''); return; }
-      if(esRegistrado()){
-        if(regInfo){
-          mensajeEstado('✓ Te encontramos como paciente de Dentilike.', 'ok');
-          if(regInfo.coloc){
-            av.style.display = 'block';
-            av.innerHTML = '🦷 <b>¡Ya puedes agendar tu ' + colocNombre().charAt(0).toLowerCase() + colocNombre().slice(1) + '!</b><br>Necesitamos ' + colocTexto() + ' completa. Solo te mostramos los horarios donde cabe.';
-          }
-        } else if(colocTelRevisado === tel){
-          mensajeEstado('No encontramos ese teléfono entre nuestros pacientes. Revisa el número, elige «Soy paciente nuevo» o <a href="#" onclick="waDirecto(); return false;" style="color:var(--teal-osc); font-weight:700;">escríbenos por WhatsApp</a>.', 'aviso');
-        }
-      } else if(regInfo){
-        mensajeEstado('Parece que ya eres paciente de Dentilike. Si es así, cambia arriba a «Ya soy paciente».', 'info');
-      } else mensajeEstado('');
-    }
-    async function revisarTelefono(){
-      const tel = document.getElementById('fTel').value.replace(/\D/g,'');
-      if(tel.length !== 10){ regInfo = null; colocTelRevisado = ''; llenarMotivos(); refrescarEstado(); cambioMotivo(); return; }
-      if(tel === colocTelRevisado || !fbOK || !authListo) return;
-      colocTelRevisado = tel;
-      let info = null;
-      try{
-        const d = await db.collection('pacientes_pub').doc(await hashPacPub(tel)).get();
-        if(d.exists && d.data().reg === true) info = { reg:true, coloc: d.data().coloc === true };
-      }catch(e){ info = null; }
-      if(document.getElementById('fTel').value.replace(/\D/g,'') !== tel) return;   // cambió mientras consultaba
-      regInfo = info;
-      llenarMotivos();
-      if(regInfo && regInfo.coloc && esRegistrado()) document.getElementById('fMotivo').value = '__coloc';
-      refrescarEstado();
-      cambioMotivo();
-    }
-    function cambioTipo(){
-      llenarMotivos();
-      if(esRegistrado() && regInfo && regInfo.coloc) document.getElementById('fMotivo').value = '__coloc';
-      refrescarEstado();
-      cambioMotivo();
-    }
-    function cambioMotivo(){
-      fechaSel = ''; horaSel = '';
-      poblarFechas();
-      document.getElementById('chipsHora').innerHTML = '<div class="hint">Primero elige un día 👆</div>';
-    }
-    // horas de inicio con "minutos" completos libres seguidos (cada hora libre dura 30 min)
-    function horasConBloque(libres, minutos){
-      const n = Math.max(1, Math.round(minutos / 30)), set = new Set(libres);
-      return libres.filter(h => { for(let k = 1; k < n; k++){ if(!set.has(sumarMinutos(h, 30 * k))) return false; } return true; });
-    }
-    function sumarMinutos(hhmm, min){
-      let [h,m] = hhmm.split(':').map(Number); m += min; h += Math.floor(m/60); m = m % 60;
-      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-    }
-    function libresDelDia(iso){
-      if(disponibilidad && disponibilidad[iso]) return disponibilidad[iso];
-      const h = horarios || {};
-      return [...horasEntre(h.mInicio,h.mFin), ...horasEntre(h.vInicio,h.vFin)];
     }
 
     function horaAmPm(hhmm){
@@ -337,24 +428,25 @@
 
     async function enviarSolicitud(){
       if(enviando) return;
-      const nombre = document.getElementById('fNombre').value.trim();
+      const nombre = modo==='paciente' ? 'Paciente registrado' : document.getElementById('fNombre').value.trim();
       const tel = document.getElementById('fTel').value.replace(/\D/g,'');
-      const coloc = modoColoc();
-      const motivo = coloc ? colocNombre() : document.getElementById('fMotivo').value;
+      const motivo = motivoSel;
       const fecha = fechaSel;
       const horaInicio = horaSel;
       if(!nombre){ alert('Escribe tu nombre completo.'); return; }
       if(tel.length !== 10){ alert('Escribe tu teléfono a 10 dígitos.'); return; }
-      if(esRegistrado() && !regInfo){ alert('No encontramos ese teléfono entre nuestros pacientes. Revisa el número o elige «Soy paciente nuevo».'); return; }
+      if(!motivo){ alert('Elige qué tratamiento necesitas.'); return; }
+      if(modo==='paciente' && (!verificado || tel!==telVerificado)){ alert('Primero verifica tu número.'); return; }
       if(!fecha){ alert('Elige un día.'); return; }
       if(!horaInicio){ alert('Elige una hora.'); return; }
+      const coloc = modoColoc();
       if(coloc && !horasConBloque(libresDelDia(fecha), colocMin()).includes(horaInicio)){ alert('Ese horario ya no tiene ' + colocTexto() + ' completa libre. Elige otro.'); return; }
       if(!fbOK || !authListo){ alert('Sin conexión. Revisa tu internet e intenta de nuevo.'); return; }
 
       const btn = document.getElementById('btnEnviar');
       enviando = true; btn.textContent = 'Enviando…'; btn.disabled = true;
       try{
-        await db.collection('solicitudes').add({
+        await conTiempo(db.collection('solicitudes').add({
           nombre: nombre,
           telefono: tel,
           fecha: fecha,
@@ -363,25 +455,41 @@
           motivo: motivo,
           estado: 'pendiente',
           fechaCreacion: Date.now(),
-          esNuevoPaciente: !esRegistrado()
-        });
-        mostrarExito(coloc, esRegistrado());
+          esNuevoPaciente: modo!=='paciente'
+        }), 12000);
+        mostrarExito();
       }catch(e){
         console.error('enviar', e);
-        alert('No se pudo enviar tu solicitud. Revisa tu internet o contáctanos por WhatsApp.');
+        alert('No pudimos confirmar el envío por la señal. Si no te escribimos pronto, contáctanos por WhatsApp.');
         btn.textContent = 'Enviar solicitud'; btn.disabled = false;
       }
       enviando = false;
     }
 
-    function mostrarExito(coloc, reg){
-      document.getElementById('formCard').innerHTML = `
+    function mostrarExito(){
+      const card = document.getElementById('formCard');
+      card.innerHTML = `
         <div class="exito">
-          <div class="ico">📌</div>
-          <h2>${coloc ? '¡Pediste tu colocación!' : '¡Tu cita quedó apartada!'}</h2>
-          <p>${coloc ? 'El Dr. Alvarado revisará tu solicitud y te confirmará el horario. Mantente atento a tu WhatsApp.' : 'El Dr. Alvarado se comunicará contigo muy pronto para confirmar tu cita y darte todos los detalles. Mantente atento a tu WhatsApp.'}</p>
-          <a class="btn-wa" href="#" onclick="waDirecto(); return false;">💬 Escríbenos por WhatsApp</a>
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+          <h2>¡Solicitud enviada!</h2>
+          <p>El Dr. Alvarado te escribirá por WhatsApp para confirmar tu cita y darte todos los detalles. Mantente atento a tu WhatsApp.</p>
+          <p class="dir">📍 Av. Himno Nacional 1902-C, Tangamanga. A un lado de Médica Florencia, frente a la gasolinera Mobil de Clouthier.</p>
+          <div class="acc-ex">
+            <a class="btn-mapa" id="btnCerrar" href="#" onclick="cerrarPagina(); return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Cerrar página</a>
+            <a class="btn-wa" href="#" onclick="waDirecto(); return false;">💬 Escríbenos por WhatsApp</a>
+          </div>
         </div>`;
+      card.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+
+    function cerrarPagina(){
+      window.close();
+      // Si el navegador no permite cerrarla solo, avisamos que ya puede cerrarla
+      setTimeout(()=>{
+        const p=document.querySelector('#formCard p');
+        if(p) p.textContent='Tu solicitud ya está enviada. Ya puedes cerrar esta pestaña; te escribiremos por WhatsApp.';
+        const b=document.getElementById('btnCerrar'); if(b) b.style.display='none';
+      }, 400);
     }
 
     function waDirecto(){
@@ -389,7 +497,116 @@
       window.open(`https://wa.me/${TEL_CLINICA}?text=${msg}`, '_blank');
     }
 
+    const MOTIVOS = {
+      general:['Valoración / consulta inicial','Profilaxis (limpieza)','Obturación con resina / empaste','Extracción','Urgencia dental','Otro'],
+      orto:['Ajuste de ortodoncia','Bracket despegado','Revisión de ortodoncia','Urgencia de ortodoncia','Otro']
+    };
+    let areaSel='', motivoSel='';
+    function motivosDe(a){
+      const base = MOTIVOS[a].slice();
+      if(a === 'orto' && modo === 'paciente' && colocDisp) base.unshift(colocNombre());
+      return base;
+    }
+    function pickArea(a){
+      areaSel=a; motivoSel='';
+      document.querySelectorAll('#chipsArea .chip').forEach(b=>b.classList.toggle('sel', b.dataset.area===a));
+      document.getElementById('chipsMotivo').innerHTML = motivosDe(a).map((m,i)=>`<button class="chip" data-i="${i}" onclick="pickMotivo(${i})">${(m === colocNombre() && colocDisp) ? '🦷 ' + m : m}</button>`).join('');
+      cambioMotivoFecha();
+    }
+    function pickMotivo(i){
+      const m = motivosDe(areaSel)[i];
+      motivoSel = m==='Otro' ? 'Otro ('+(areaSel==='orto'?'ortodoncia':'general')+')' : m;
+      document.querySelectorAll('#chipsMotivo .chip').forEach(b=>b.classList.toggle('sel', Number(b.dataset.i)===i));
+      cambioMotivoFecha();
+    }
+    // si cambia el tipo de cita (p. ej. colocación = hora completa) se recalculan días y horas
+    function cambioMotivoFecha(){
+      fechaSel = ''; horaSel = '';
+      if(horarios) poblarFechas();
+      document.getElementById('chipsHora').innerHTML = '<div class="hint">Primero elige un día 👆</div>';
+    }
+
+    function setTipo(t){
+      modo=t; verificado=false; telVerificado=''; colocDisp=false;
+      if(areaSel){ pickArea(areaSel); }
+      document.getElementById('tipoNuevo').classList.toggle('sel',t==='nuevo');
+      document.getElementById('tipoPac').classList.toggle('sel',t==='paciente');
+      const nuevo = t==='nuevo';
+      document.getElementById('lblNombre').style.display = nuevo?'':'none';
+      document.getElementById('fNombre').style.display = nuevo?'':'none';
+      document.getElementById('bloqueVerif').style.display = nuevo?'none':'';
+      document.getElementById('bloqueCita').style.display = nuevo?'':'none';
+      resetVerif();
+    }
+    function resetVerif(){
+      document.getElementById('msgVerif').textContent='';
+      const b=document.getElementById('btnVerificar'); b.style.display=''; b.disabled=false; b.textContent='Verificar mi número';
+    }
+    function msgWA(txt){
+      document.getElementById('msgVerif').innerHTML = txt+' <a href="#" onclick="waDirecto(); return false;" style="color:var(--azul); font-weight:800">Escríbenos por WhatsApp</a>';
+    }
+    async function verificarPaciente(){
+      const tel = document.getElementById('fTel').value.replace(/\D/g,'');
+      const msg = document.getElementById('msgVerif');
+      if(tel.length !== 10){ msg.textContent='Escribe tu teléfono a 10 dígitos.'; return; }
+      if(!fbOK || !authListo){ msg.textContent='Sin conexión. Revisa tu internet e intenta de nuevo.'; return; }
+      const btn = document.getElementById('btnVerificar');
+      btn.disabled = true; btn.textContent = 'Verificando…'; msg.textContent='';
+      try{
+        const r = await conTiempo(firebase.functions().httpsCallable('verificarPaciente')({telefono: tel}), 12000);
+        const d = r.data || {};
+        if(d.ok){
+          verificado = true; telVerificado = tel;
+          msg.textContent = '✅ Número verificado. Elige tu día y hora.';
+          btn.style.display = 'none';
+          document.getElementById('bloqueCita').style.display = '';
+          await consultarColoc(tel);
+          return;
+        }
+        msgWA(d.bloqueado ? 'Demasiados intentos. Intenta más tarde o comunícate con el Dr.'
+                          : 'No pudimos verificar tus datos. Revisa tu número o comunícate con el Dr.');
+      }catch(e){
+        console.error('verificar', e);
+        msgWA('No se pudo verificar en este momento. Intenta de nuevo o comunícate con el Dr.');
+      }
+      btn.disabled = false; btn.textContent = 'Verificar mi número';
+    }
+    document.getElementById('fTel').addEventListener('input', ()=>{
+      if(modo==='paciente' && verificado){
+        verificado=false; telVerificado=''; colocDisp=false;
+        if(areaSel){ pickArea(areaSel); }
+        document.getElementById('bloqueCita').style.display='none';
+        resetVerif();
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', iniciar);
+    window.addEventListener('online', ()=>{ if(!authListo) iniciar(); });
+  </script>
+  <script>
+    // --- Solo interfaz: no toca Firebase ni el envío ---
+    (function(){
+      const anio = document.getElementById('anio'); if(anio) anio.textContent = new Date().getFullYear();
+
+      // Ocultar el botón del header cuando el formulario ya está a la vista
+      const cta = document.getElementById('topCta'), agenda = document.getElementById('agenda');
+      if('IntersectionObserver' in window && cta && agenda){
+        new IntersectionObserver(es => es.forEach(e => cta.classList.toggle('oculto', e.isIntersecting)), {threshold:0.15}).observe(agenda);
+      }
+
+      // Horario del footer, leído de config_publica/horarios cuando ya cargó
+      let intentos = 0;
+      const t = setInterval(() => {
+        intentos++;
+        if(typeof horarios !== 'undefined' && horarios){
+          clearInterval(t);
+          const h = horarios, tramos = [];
+          if(h.mInicio && h.mFin) tramos.push(`de ${horaAmPm(h.mInicio)} a ${horaAmPm(h.mFin)}`);
+          if(h.vInicio && h.vFin) tramos.push(`de ${horaAmPm(h.vInicio)} a ${horaAmPm(h.vFin)}`);
+          if(tramos.length) document.getElementById('pieHorario').textContent = 'Lunes a sábado, ' + tramos.join(' y ') + '. Con cita previa.';
+        } else if(intentos > 60){ clearInterval(t); }
+      }, 500);
+    })();
   </script>
 </body>
 </html>
