@@ -85,14 +85,22 @@
     </div>
 
     <div class="card" id="formCard">
+      <label>¿Ya eres paciente de Dentilike?</label>
+      <select id="fTipo" onchange="cambioTipo()">
+        <option value="nuevo">Soy paciente nuevo</option>
+        <option value="reg">Ya soy paciente</option>
+      </select>
+
       <label>Tu nombre completo</label>
       <input type="text" id="fNombre" placeholder="Ej. María López García">
 
       <label>Tu teléfono (WhatsApp)</label>
       <div class="tel-group">
         <span class="tel-prefix">🇲🇽 +52</span>
-        <input type="tel" id="fTel" placeholder="444 123 4567" inputmode="numeric" oninput="revisarColocacion()">
+        <input type="tel" id="fTel" placeholder="444 123 4567" inputmode="numeric" oninput="revisarTelefono()">
       </div>
+
+      <div id="estadoTel" style="display:none; border-radius:12px; padding:11px 12px; margin-top:12px; font-size:.82rem; line-height:1.5;"></div>
 
       <div id="avisoColoc" style="display:none; background:#e6f7f5; border:1.5px solid var(--teal); border-radius:12px; padding:12px; margin-top:14px; font-size:.84rem; color:var(--azul-osc); line-height:1.5;"></div>
 
@@ -136,8 +144,10 @@
     };
     const TEL_CLINICA = "524446036659";
     let db=null, auth=null, fbOK=false, authListo=false, horarios=null, disponibilidad=null, enviando=false;
-    let colocArc = '';   // 'sup' | 'inf' si el teléfono escrito tiene una colocación pendiente
+    let regInfo = null;        // datos públicos del teléfono escrito: { reg, coloc } o null si no es paciente registrado
     let colocTelRevisado = '';
+    const MOTIVOS_NUEVO = [['Valoración/consulta inicial','Valoración / consulta inicial'],['Ortodoncia','Ortodoncia (brackets)'],['Urgencia','Urgencia dental'],['Otro','Otro']];
+    const MOTIVOS_REG = [['Cita de control','Cita de control'],['Revisión','Revisión'],['Dolor o molestia','Dolor o molestia'],['Se me cayó un bracket','Se me cayó un bracket'],['Ajuste','Ajuste'],['Otro','Otro']];
 
     try {
       firebase.initializeApp(firebaseConfig);
@@ -161,7 +171,7 @@
         await cargarHorarios();
         await cargarDisponibilidad();
         poblarFechas();
-        revisarColocacion();
+        revisarTelefono();
       }catch(e){ console.error('auth', e); setSync(false); }
     }
 
@@ -208,41 +218,66 @@
     function colocMin(){ const m = Number(horarios && horarios.colocacionMin); return [60,90,120].includes(m) ? m : 60; }
     function colocNombre(){ return colocBase(); }
     function colocTexto(){ const m = colocMin(); return m === 60 ? '1 hora' : (m === 90 ? '1 hora y media' : '2 horas'); }
-    function modoColoc(){ return !!colocArc && document.getElementById('fMotivo').value === '__coloc'; }
-    async function hashColoc(tel10){
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('colocacion|' + tel10));
+    function esRegistrado(){ return document.getElementById('fTipo').value === 'reg'; }
+    function modoColoc(){ return esRegistrado() && !!(regInfo && regInfo.coloc) && document.getElementById('fMotivo').value === '__coloc'; }
+    async function hashPacPub(tel10){
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('pacpub|' + tel10));
       return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
     }
-    async function revisarColocacion(){
+    function mensajeEstado(html, tono){
+      const e = document.getElementById('estadoTel');
+      if(!html){ e.style.display = 'none'; return; }
+      const t = { ok:['#e6f7f5','var(--teal)'], aviso:['#fff7e6','#f0b429'], info:['#eef2f7','var(--borde)'] }[tono || 'info'];
+      e.style.display = 'block'; e.style.background = t[0]; e.style.border = '1.5px solid ' + t[1]; e.innerHTML = html;
+    }
+    // reconstruye la lista de motivos según el tipo de paciente
+    function llenarMotivos(){
+      const sel = document.getElementById('fMotivo'), previo = sel.value;
+      let lista = esRegistrado() ? MOTIVOS_REG.slice() : MOTIVOS_NUEVO.slice();
+      if(esRegistrado() && regInfo && regInfo.coloc) lista.unshift(['__coloc', '🦷 ' + colocNombre()]);
+      sel.innerHTML = lista.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');
+      sel.value = lista.some(([v]) => v === previo) ? previo : lista[0][0];
+    }
+    function refrescarEstado(){
       const tel = document.getElementById('fTel').value.replace(/\D/g,'');
-      if(tel.length !== 10){ if(colocArc) quitarColoc(); colocTelRevisado = ''; return; }
+      const av = document.getElementById('avisoColoc');
+      av.style.display = 'none';
+      if(tel.length !== 10){ mensajeEstado(''); return; }
+      if(esRegistrado()){
+        if(regInfo){
+          mensajeEstado('✓ Te encontramos como paciente de Dentilike.', 'ok');
+          if(regInfo.coloc){
+            av.style.display = 'block';
+            av.innerHTML = '🦷 <b>¡Ya puedes agendar tu ' + colocNombre().charAt(0).toLowerCase() + colocNombre().slice(1) + '!</b><br>Necesitamos ' + colocTexto() + ' completa. Solo te mostramos los horarios donde cabe.';
+          }
+        } else if(colocTelRevisado === tel){
+          mensajeEstado('No encontramos ese teléfono entre nuestros pacientes. Revisa el número, elige «Soy paciente nuevo» o <a href="#" onclick="waDirecto(); return false;" style="color:var(--teal-osc); font-weight:700;">escríbenos por WhatsApp</a>.', 'aviso');
+        }
+      } else if(regInfo){
+        mensajeEstado('Parece que ya eres paciente de Dentilike. Si es así, cambia arriba a «Ya soy paciente».', 'info');
+      } else mensajeEstado('');
+    }
+    async function revisarTelefono(){
+      const tel = document.getElementById('fTel').value.replace(/\D/g,'');
+      if(tel.length !== 10){ regInfo = null; colocTelRevisado = ''; llenarMotivos(); refrescarEstado(); cambioMotivo(); return; }
       if(tel === colocTelRevisado || !fbOK || !authListo) return;
       colocTelRevisado = tel;
-      let arc = '';
+      let info = null;
       try{
-        const d = await db.collection('colocaciones_pub').doc(await hashColoc(tel)).get();
-        if(d.exists) arc = 'coloc';
-      }catch(e){ arc = ''; }
+        const d = await db.collection('pacientes_pub').doc(await hashPacPub(tel)).get();
+        if(d.exists && d.data().reg === true) info = { reg:true, coloc: d.data().coloc === true };
+      }catch(e){ info = null; }
       if(document.getElementById('fTel').value.replace(/\D/g,'') !== tel) return;   // cambió mientras consultaba
-      if(!arc){ if(colocArc) quitarColoc(); return; }
-      colocArc = arc;
-      const sel = document.getElementById('fMotivo');
-      if(!sel.querySelector('option[value="__coloc"]')){
-        const o = document.createElement('option'); o.value = '__coloc'; sel.insertBefore(o, sel.firstChild);
-      }
-      sel.querySelector('option[value="__coloc"]').textContent = '🦷 ' + colocNombre();
-      sel.value = '__coloc';
-      const av = document.getElementById('avisoColoc');
-      av.style.display = 'block';
-      av.innerHTML = '🦷 <b>¡Ya puedes agendar tu ' + colocNombre().charAt(0).toLowerCase() + colocNombre().slice(1) + '!</b><br>Necesitamos ' + colocTexto() + ' completa. Solo te mostramos los horarios donde cabe.';
+      regInfo = info;
+      llenarMotivos();
+      if(regInfo && regInfo.coloc && esRegistrado()) document.getElementById('fMotivo').value = '__coloc';
+      refrescarEstado();
       cambioMotivo();
     }
-    function quitarColoc(){
-      const sel = document.getElementById('fMotivo');
-      const o = sel.querySelector('option[value="__coloc"]'); if(o) o.remove();
-      if(sel.value === '__coloc' || !sel.value) sel.selectedIndex = 0;
-      colocArc = '';
-      document.getElementById('avisoColoc').style.display = 'none';
+    function cambioTipo(){
+      llenarMotivos();
+      if(esRegistrado() && regInfo && regInfo.coloc) document.getElementById('fMotivo').value = '__coloc';
+      refrescarEstado();
       cambioMotivo();
     }
     function cambioMotivo(){
@@ -310,6 +345,7 @@
       const horaInicio = horaSel;
       if(!nombre){ alert('Escribe tu nombre completo.'); return; }
       if(tel.length !== 10){ alert('Escribe tu teléfono a 10 dígitos.'); return; }
+      if(esRegistrado() && !regInfo){ alert('No encontramos ese teléfono entre nuestros pacientes. Revisa el número o elige «Soy paciente nuevo».'); return; }
       if(!fecha){ alert('Elige un día.'); return; }
       if(!horaInicio){ alert('Elige una hora.'); return; }
       if(coloc && !horasConBloque(libresDelDia(fecha), colocMin()).includes(horaInicio)){ alert('Ese horario ya no tiene ' + colocTexto() + ' completa libre. Elige otro.'); return; }
@@ -327,9 +363,9 @@
           motivo: motivo,
           estado: 'pendiente',
           fechaCreacion: Date.now(),
-          esNuevoPaciente: !coloc
+          esNuevoPaciente: !esRegistrado()
         });
-        mostrarExito(coloc);
+        mostrarExito(coloc, esRegistrado());
       }catch(e){
         console.error('enviar', e);
         alert('No se pudo enviar tu solicitud. Revisa tu internet o contáctanos por WhatsApp.');
@@ -338,7 +374,7 @@
       enviando = false;
     }
 
-    function mostrarExito(coloc){
+    function mostrarExito(coloc, reg){
       document.getElementById('formCard').innerHTML = `
         <div class="exito">
           <div class="ico">📌</div>
