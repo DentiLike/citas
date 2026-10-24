@@ -442,6 +442,12 @@
       const coloc = modoColoc();
       if(coloc && !horasConBloque(libresDelDia(fecha), colocMin()).includes(horaInicio)){ alert('Ese horario ya no tiene ' + colocTexto() + ' completa libre. Elige otro.'); return; }
       if(!fbOK || !authListo){ alert('Sin conexión. Revisa tu internet e intenta de nuevo.'); return; }
+      // Vuelve a leer la disponibilidad justo antes de enviar: el doctor pudo bloquear ese día mientras la página estaba abierta
+      try{ await conTiempo(cargarDisponibilidad(), 8000); }catch(e){}
+      if(disponibilidad && !(disponibilidad[fecha] || []).includes(horaInicio)){
+        alert('Ese horario ya no está disponible. Elige otro, por favor.');
+        poblarFechas(); return;
+      }
 
       const btn = document.getElementById('btnEnviar');
       enviando = true; btn.textContent = 'Enviando…'; btn.disabled = true;
