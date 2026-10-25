@@ -150,6 +150,41 @@
     html{scroll-behavior:auto;}
     *, *::before, *::after{animation:none !important; transition:none !important;}
   }
+
+  /* ===== Temática de temporada (mismas fechas que Smile Plan) ===== */
+  body[class*="fest-"] #btnEnviar{background:linear-gradient(135deg,var(--cta1),var(--cta2)); box-shadow:0 4px 0 var(--cta-borde), 0 8px 20px var(--cta-glow)}
+  body.fest-halloween{--cta1:#ff8a3d; --cta2:#ea580c; --cta-borde:#b8460b; --cta-glow:rgba(234,88,12,.35)}
+  body.fest-muertos{--cta1:#f6a623; --cta2:#d97706; --cta-borde:#a85a04; --cta-glow:rgba(217,119,6,.35)}
+  body.fest-patrias{--cta1:#119a57; --cta2:#006847; --cta-borde:#004d35; --cta-glow:rgba(0,104,71,.35)}
+  body.fest-navidad{--cta1:#d63a3f; --cta2:#a8161c; --cta-borde:#7f1016; --cta-glow:rgba(168,22,28,.32)}
+  body.fest-anonuevo{--cta1:#d9a821; --cta2:#a87a06; --cta-borde:#7a5800; --cta-glow:rgba(168,122,6,.35)}
+  body.fest-sanvalentin{--cta1:#f2557a; --cta2:#d23661; --cta-borde:#a3234a; --cta-glow:rgba(210,54,97,.32)}
+  body[class*="fest-"] .card{position:relative; overflow:hidden}
+  .fest-saludo{display:inline-block; margin:0 0 10px; padding:5px 15px; border-radius:20px; font-family:var(--display); font-weight:600; font-size:.92rem}
+  body.fest-halloween .fest-saludo{background:#2b1a3d; color:#ffb347}
+  body.fest-muertos .fest-saludo{background:#fff1d6; color:#9d174d}
+  body.fest-patrias .fest-saludo{background:#e8f5ee; color:#006847}
+  body.fest-navidad .fest-saludo{background:#fdecec; color:#a8161c}
+  body.fest-anonuevo .fest-saludo{background:#1d2b44; color:#f3cf63}
+  body.fest-sanvalentin .fest-saludo{background:#ffe4ec; color:#c2185b}
+  .fest-deco{position:fixed; inset:0; pointer-events:none; z-index:50; overflow:hidden}
+  .fest-deco .vuela{position:absolute; left:-60px; font-size:22px; opacity:.68; animation:festVuela linear infinite}
+  @keyframes festVuela{0%{transform:translate(0,0) rotate(-6deg)}25%{transform:translate(28vw,-24px) rotate(6deg)}50%{transform:translate(56vw,10px) rotate(-6deg)}75%{transform:translate(84vw,-18px) rotate(6deg)}100%{transform:translate(115vw,0) rotate(-6deg)}}
+  .fest-deco .cae{position:absolute; top:-40px; font-size:18px; opacity:.7; animation:festCae linear infinite}
+  .fest-deco .conf{position:absolute; top:-20px; width:8px; height:12px; border-radius:2px; opacity:.85; animation:festCae linear infinite}
+  @keyframes festCae{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(24px,52vh) rotate(180deg)}100%{transform:translate(-10px,108vh) rotate(360deg)}}
+  .fest-deco .sube{position:absolute; bottom:-40px; font-size:18px; opacity:.68; animation:festSube linear infinite}
+  @keyframes festSube{0%{transform:translate(0,0) scale(.9)}50%{transform:translate(-18px,-55vh) scale(1.05)}100%{transform:translate(12px,-112vh) scale(.9)}}
+  .fest-tela{position:absolute; top:0; right:0; width:96px; height:96px; opacity:.45; pointer-events:none}
+  .fest-tira{height:22px; margin:-26px -20px 14px; }
+  .fest-tira.tricolor{background:repeating-linear-gradient(90deg,#006847 0 30px,#fff 30px 60px,#ce1126 60px 90px)}
+  .fest-tira.picado{height:26px; background:repeating-linear-gradient(90deg,#e11d74 0 34px,#f59e0b 34px 68px,#7c3aed 68px 102px,#10b981 102px 136px,#f97316 136px 170px)}
+  .fest-tira.tricolor, .fest-tira.picado{clip-path:polygon(0 0,100% 0,100% 55%,96% 100%,92% 55%,88% 100%,84% 55%,80% 100%,76% 55%,72% 100%,68% 55%,64% 100%,60% 55%,56% 100%,52% 55%,48% 100%,44% 55%,40% 100%,36% 55%,32% 100%,28% 55%,24% 100%,20% 55%,16% 100%,12% 55%,8% 100%,4% 55%,0 100%)}
+  .fest-tira.luces{height:26px; background:radial-gradient(circle 5px at 12px 17px,#ef4444 95%,#0000) 0 0/72px 26px, radial-gradient(circle 5px at 30px 17px,#facc15 95%,#0000) 0 0/72px 26px, radial-gradient(circle 5px at 48px 17px,#22c55e 95%,#0000) 0 0/72px 26px, radial-gradient(circle 5px at 66px 17px,#3b82f6 95%,#0000) 0 0/72px 26px, linear-gradient(#2f5d3a,#2f5d3a) 0 8px/100% 2px no-repeat; animation:festLuces 1.6s steps(2) infinite}
+  @keyframes festLuces{50%{filter:brightness(1.35) saturate(1.3)}}
+  .fest-tira.dorado{height:8px; background:linear-gradient(90deg,#b8860b,#f3cf63,#b8860b,#f3cf63,#b8860b)}
+  .fest-tira.corazones{height:8px; background:linear-gradient(90deg,#f2557a,#ffb3c6,#f2557a,#ffb3c6,#f2557a)}
+  @media(prefers-reduced-motion:reduce){.fest-deco{display:none}}
 </style>
 </head>
 <body>
@@ -262,9 +297,6 @@
   <script>
     if('serviceWorker' in navigator){
       navigator.serviceWorker.register('./sw.js').catch(function(){});
-      navigator.serviceWorker.ready.then(function(){ return caches.match('./index.html'); }).then(function(r){
-        var t=document.getElementById('offTxt'); if(r && t) t.textContent=' · lista sin conexión ✓';
-      }).catch(function(){});
     }
   </script>
   <script>
@@ -614,5 +646,32 @@
       }, 500);
     })();
   </script>
+
+<script>
+// ===== Temática de temporada (mismas fechas que Smile Plan). Vista previa: ?fest=halloween =====
+(function(){
+  var F=[{n:'patrias',d:'09-05',h:'09-17',s:'¡Feliz Mes Patrio! 🇲🇽'},{n:'halloween',d:'10-12',h:'11-03',s:'¡Boo! 🎃 Feliz Halloween'},{n:'muertos',d:'10-12',h:'11-03',s:'🌼 Feliz Día de Muertos'},{n:'navidad',d:'12-01',h:'12-26',s:'🎄 ¡Feliz Navidad!'},{n:'anonuevo',d:'12-27',h:'01-06',s:'🥂 ¡Feliz Año Nuevo! Estrena sonrisa'},{n:'sanvalentin',d:'02-07',h:'02-15',s:'💕 Enamórate de tu sonrisa'}];
+  var f=null;
+  try{ var q=new URLSearchParams(location.search).get('fest'); if(q) f=F.filter(function(x){return x.n===q;})[0]||null; }catch(e){}
+  if(!f){ var t=new Date(), md=String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+    var a=F.filter(function(x){ return x.d<=x.h ? (md>=x.d && md<=x.h) : (md>=x.d || md<=x.h); }); if(a.length) f=a[Math.floor(Math.random()*a.length)]; }
+  if(!f) return;
+  var n=f.n; document.body.classList.add('fest-'+n);
+  var cab=document.querySelector('.agenda-cab h1'); if(cab) cab.insertAdjacentHTML('beforebegin','<div class="fest-saludo">'+f.s+'</div>');
+  var card=document.getElementById('formCard');
+  var tira={patrias:'tricolor',muertos:'picado',navidad:'luces',anonuevo:'dorado',sanvalentin:'corazones'}[n];
+  if(card && tira) card.insertAdjacentHTML('afterbegin','<div class="fest-tira '+tira+'"></div>');
+  if(card && n==='halloween') card.insertAdjacentHTML('afterbegin','<svg class="fest-tela" viewBox="0 0 100 100" fill="none" stroke="#5b4a6b" stroke-width="1.2"><path d="M100 0L40 60M100 0L20 30M100 0L70 95M100 0L0 5M100 0L98 100"/><path d="M85 3Q86 14 97 15M70 6Q72 28 95 30M55 9Q58 42 93 45M40 12Q44 56 90 60"/><circle cx="62" cy="38" r="3" fill="#5b4a6b"/><path d="M62 38V20" stroke-width=".8"/></svg>');
+  var P={halloween:{v:['🦇','🦇','🦇'],c:['🎃','🍬']},muertos:{c:['🌼','🌼','🌼','🏵️']},patrias:{k:['#006847','#ffffff','#ce1126','#006847','#ce1126','#ffffff','#006847','#ce1126']},navidad:{c:['❄️','❄️','❄️','❄️','❄️']},anonuevo:{c:['✨','✨'],k:['#d9a821','#f3cf63','#b8860b','#c0c0c0','#f3cf63','#d9a821']},sanvalentin:{u:['💗','💕','❤️','💗']}}[n]||{};
+  ['v','c','k','u'].forEach(function(k){ if(P[k]) P[k]=P[k].concat(P[k]); });   // el doble de iconitos
+  var d=document.createElement('div'); d.className='fest-deco'; d.setAttribute('aria-hidden','true');
+  function el(c,txt){ var s=document.createElement('span'); s.className=c; if(txt) s.textContent=txt; d.appendChild(s); return s; }
+  (P.v||[]).forEach(function(e,i){ var s=el('vuela',e); s.style.top=((6+i*15)%90)+'vh'; s.style.animationDuration=(14+(i%3)*5)+'s'; s.style.animationDelay=(i*2.6)+'s'; s.style.fontSize=(20+(i%3)*5)+'px'; });
+  (P.c||[]).forEach(function(e,i){ var s=el('cae',e); s.style.left=((7+i*17)%94)+'vw'; s.style.animationDuration=(12+(i%4)*3)+'s'; s.style.animationDelay=(i*1.9)+'s'; s.style.fontSize=(18+(i%3)*4)+'px'; });
+  (P.k||[]).forEach(function(c,i){ var s=el('conf'); s.style.background=c; s.style.left=((3+i*11)%96)+'vw'; s.style.animationDuration=(9+(i%4)*3)+'s'; s.style.animationDelay=(i*0.9)+'s'; if(c==='#ffffff') s.style.boxShadow='0 0 0 1px #d6dde5'; });
+  (P.u||[]).forEach(function(e,i){ var s=el('sube',e); s.style.left=((8+i*17)%92)+'vw'; s.style.animationDuration=(13+(i%4)*3)+'s'; s.style.animationDelay=(i*2)+'s'; s.style.fontSize=(18+(i%3)*4)+'px'; });
+  document.body.appendChild(d);
+})();
+</script>
 </body>
 </html>
