@@ -160,7 +160,7 @@
   body.fest-anonuevo{--cta1:#d9a821; --cta2:#a87a06; --cta-borde:#7a5800; --cta-glow:rgba(168,122,6,.35)}
   body.fest-sanvalentin{--cta1:#f2557a; --cta2:#d23661; --cta-borde:#a3234a; --cta-glow:rgba(210,54,97,.32)}
   body[class*="fest-"] .card{position:relative; overflow:hidden}
-  .fest-saludo{display:inline-block; margin:0 0 10px; padding:5px 15px; border-radius:20px; font-family:var(--display); font-weight:600; font-size:.92rem}
+  .fest-saludo{display:inline-block; margin:0 0 12px; padding:8px 20px; border-radius:24px; font-family:var(--display); font-weight:700; font-size:1.25rem; letter-spacing:.2px; box-shadow:0 3px 10px rgba(0,0,0,.12)}
   body.fest-halloween .fest-saludo{background:#2b1a3d; color:#ffb347}
   body.fest-muertos .fest-saludo{background:#fff1d6; color:#9d174d}
   body.fest-patrias .fest-saludo{background:#e8f5ee; color:#006847}
@@ -650,7 +650,7 @@
 <script>
 // ===== Temática de temporada (mismas fechas que Smile Plan). Vista previa: ?fest=halloween =====
 (function(){
-  var F=[{n:'patrias',d:'09-05',h:'09-17',s:'¡Feliz Mes Patrio! 🇲🇽'},{n:'halloween',d:'10-12',h:'11-03',s:'¡Boo! 🎃 Feliz Halloween'},{n:'muertos',d:'10-12',h:'11-03',s:'🌼 Feliz Día de Muertos'},{n:'navidad',d:'12-01',h:'12-26',s:'🎄 ¡Feliz Navidad!'},{n:'anonuevo',d:'12-27',h:'01-06',s:'🥂 ¡Feliz Año Nuevo! Estrena sonrisa'},{n:'sanvalentin',d:'02-07',h:'02-15',s:'💕 Enamórate de tu sonrisa'}];
+  var F=[{n:'patrias',d:'09-05',h:'09-17',s:'¡Feliz Mes Patrio! 🇲🇽'},{n:'halloween',d:'10-12',h:'11-03',s:'¡Auuuuuu! 🐺 Feliz Halloween'},{n:'muertos',d:'10-12',h:'11-03',s:'🌼 Feliz Día de Muertos'},{n:'navidad',d:'12-01',h:'12-26',s:'🎄 ¡Feliz Navidad!'},{n:'anonuevo',d:'12-27',h:'01-06',s:'🥂 ¡Feliz Año Nuevo! Estrena sonrisa'},{n:'sanvalentin',d:'02-07',h:'02-15',s:'💕 Enamórate de tu sonrisa'}];
   var f=null;
   try{ var q=new URLSearchParams(location.search).get('fest'); if(q) f=F.filter(function(x){return x.n===q;})[0]||null; }catch(e){}
   if(!f){ var t=new Date(), md=String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
