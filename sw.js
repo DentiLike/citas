@@ -1,5 +1,5 @@
 // Service Worker — la página abre siempre, incluso sin datos ni Wi-Fi
-const CACHE_NAME = "citas-v38";
+const CACHE_NAME = "citas-v40";
 const SHELL = "./index.html";
 const SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
 const OPCIONALES = [

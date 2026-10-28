@@ -230,7 +230,7 @@
         <div class="paso"><span>3</span>¿Qué tratamiento necesitas?</div>
         <div class="chips" id="chipsArea">
           <button class="chip area" data-area="general" onclick="pickArea('general')">Odontología general</button>
-          <button class="chip area" data-area="orto" onclick="pickArea('orto')">Ortodoncia</button>
+          <button class="chip area" data-area="orto" onclick="pickArea('orto')">Ortodoncia<span style="display:block; font-size:.8em; font-weight:500; opacity:.85; margin-top:2px;">(brackets)</span></button>
         </div>
         <div class="chips" id="chipsMotivo" style="margin-top:10px"></div>
 
@@ -537,11 +537,13 @@
 
     const MOTIVOS = {
       general:['Valoración / consulta inicial','Profilaxis (limpieza)','Obturación con resina / empaste','Extracción','Urgencia dental','Otro'],
-      orto:['Ajuste de ortodoncia','Bracket despegado','Revisión de ortodoncia','Urgencia de ortodoncia','Otro']
+      orto:['Ajuste de ortodoncia','Bracket despegado','Revisión de ortodoncia','Urgencia de ortodoncia','Otro'],
+      // paciente nuevo: quiere empezar (viene de Smile Plan) o ya trae brackets de otro lugar
+      ortoNuevo:['Valoración de ortodoncia (quiero brackets)','Ya traigo brackets de otro consultorio','Otro']
     };
     let areaSel='', motivoSel='';
     function motivosDe(a){
-      const base = MOTIVOS[a].slice();
+      const base = (a === 'orto' && modo !== 'paciente' ? MOTIVOS.ortoNuevo : MOTIVOS[a]).slice();
       if(a === 'orto' && modo === 'paciente' && colocDisp) base.unshift(colocNombre());
       return base;
     }
@@ -550,6 +552,7 @@
       document.querySelectorAll('#chipsArea .chip').forEach(b=>b.classList.toggle('sel', b.dataset.area===a));
       document.getElementById('chipsMotivo').innerHTML = motivosDe(a).map((m,i)=>`<button class="chip" data-i="${i}" onclick="pickMotivo(${i})">${(m === colocNombre() && colocDisp) ? '🦷 ' + m : m}</button>`).join('');
       cambioMotivoFecha();
+      if(a === 'orto' && modo !== 'paciente') pickMotivo(0);   // lo más común: viene a valoración para empezar
     }
     function pickMotivo(i){
       const m = motivosDe(areaSel)[i];
